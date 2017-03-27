@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { View } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 import { ActionCreators } from '../actions';
 import LoginScreen from './LoginScreen.js';
 import LoggedInScreen from './LoggedInScreen';
@@ -13,7 +14,8 @@ class AppContainer extends Component {
   componentWillUpdate(nextProps) {
     if (nextProps.user.initialiased
       && (this.props.user.initialiased !== nextProps.user.initialiased)) {
-      // Hide splash screen
+      // Hide splash screen.
+      SplashScreen.hide();
     }
   }
   render() {
