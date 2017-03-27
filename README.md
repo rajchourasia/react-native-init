@@ -11,8 +11,5 @@ This is a sample react native starter project, with Launch Screen and Redux Inte
 
 [redux-logger](https://github.com/evgenyrodionov/redux-logger) is used log action calls and state in development mode.
 
-## Demo
-![Demo gif](https://github.com/rajchourasia/react-native-goodreads-login/blob/master/static/demo.gif)
-
 ## License
 MIT
