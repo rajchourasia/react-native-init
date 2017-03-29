@@ -4,7 +4,9 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   TouchableHighlight,
+  Alert,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -12,7 +14,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+  },
+  logoSection: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logoSectionImage: {
+    width: 100,
+    resizeMode: 'contain',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  loginSection: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  quarterHeight: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonWrapper: {
     backgroundColor: '#553b08',
@@ -28,20 +51,73 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#ffffff',
   },
+  pitchText: {
+    fontSize: 26,
+    textAlign: 'center',
+  },
+  textLink: {
+    fontSize: 16,
+    color: '#0645AD',
+    textAlign: 'center',
+    marginTop: 10,
+  },
 });
 
+const alertMessage = 'Because Goodreads is awesome';
+const logoImage = require('../../static/logo.png');
+
 class LoginScreen extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalVisible: false,
+    };
+  }
+  setModalVisible(visible) {
+    this.setState({
+      modalVisible: visible,
+    });
+  }
   login() {
     this.props.logIn();
   }
   render() {
     return (
       <View style={styles.container}>
-        <TouchableHighlight style={styles.buttonWrapper} onPress={() => { this.login(); }}>
-          <Text style={styles.buttonText}>
-            Login Here
+        <View style={styles.quarterHeight} />
+        <View style={styles.logoSection} >
+          <Image source={logoImage} style={styles.logoSectionImage} />
+        </View>
+        <View style={styles.quarterHeight} >
+          <Text style={styles.pitchText}>
+            Build Reading Habit
           </Text>
-        </TouchableHighlight>
+          <Text style={styles.pitchText}>
+            Learn English
+          </Text>
+        </View>
+        <View style={styles.loginSection} >
+          <TouchableHighlight style={styles.buttonWrapper} onPress={() => { this.login(); }}>
+            <Text style={styles.buttonText}>
+              Login With Goodreads
+            </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => Alert.alert(
+              'Why Goodreads?',
+              alertMessage,
+              [
+                { text: 'Got It!' },
+              ]
+            )}
+          >
+            <Text style={styles.textLink}>
+              Why Goodreads?
+            </Text>
+          </TouchableHighlight>
+        </View>
+        <View style={styles.quarterHeight} />
       </View>
     );
   }
