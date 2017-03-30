@@ -1,12 +1,16 @@
 import React, { Component, PropTypes } from 'react';
+import {
+  Button,
+  Text as RNEText,
+} from 'react-native-elements';
 
 import {
   StyleSheet,
-  Text,
   View,
   Image,
   TouchableHighlight,
   Alert,
+  Text,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -37,23 +41,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttonWrapper: {
+  loginButton: {
     backgroundColor: '#553b08',
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    borderRadius: 5,
-    opacity: 0.9,
-  },
-  buttonText: {
-    fontSize: 20,
-    textAlign: 'center',
-    color: '#ffffff',
-  },
-  pitchText: {
-    fontSize: 26,
-    textAlign: 'center',
   },
   textLink: {
     fontSize: 16,
@@ -63,8 +52,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const alertMessage = 'Because Goodreads is awesome';
 const logoImage = require('../../static/logo.png');
+
+const alertMessage = 'Because Goodreads is awesome';
+
+import { createIconSetFromIcoMoon } from 'react-native-vector-icons';
+import icoMoonConfig from '../../static/icomoon/selection.json';
+const Icon = createIconSetFromIcoMoon(icoMoonConfig);
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -90,19 +84,21 @@ class LoginScreen extends Component {
           <Image source={logoImage} style={styles.logoSectionImage} />
         </View>
         <View style={styles.quarterHeight} >
-          <Text style={styles.pitchText}>
+          <RNEText h4>
             Build Reading Habit
-          </Text>
-          <Text style={styles.pitchText}>
+          </RNEText>
+          <RNEText h4>
             Learn English
-          </Text>
+          </RNEText>
         </View>
         <View style={styles.loginSection} >
-          <TouchableHighlight style={styles.buttonWrapper} onPress={() => { this.login(); }}>
-            <Text style={styles.buttonText}>
-              Login With Goodreads
-            </Text>
-          </TouchableHighlight>
+          <Button
+            raised
+            icon={{ name: 'goodreads-sign', type: 'custom', iconFunction: Icon, color: '#fff' }}
+            title="Login With Goodreads"
+            buttonStyle={styles.loginButton}
+            onPress={() => { this.login(); }}
+          />
           <TouchableHighlight
             onPress={() => Alert.alert(
               'Why Goodreads?',

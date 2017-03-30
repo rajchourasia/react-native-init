@@ -9,7 +9,9 @@
   "dependencies": {
     "react": "15.4.2",
     "react-native": "0.42.0",
+    "react-native-elements": "https://github.com/rajchourasia/react-native-elements/tarball/customIconButton",
     "react-native-splash-screen": "^2.0.0",
+    "react-native-vector-icons": "^4.0.0",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
     "redux-logger": "^2.8.2",

@@ -39,6 +39,7 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		B09B71F65125403B920873D3 /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3C2ACA69D0945E983AFA54C /* libSplashScreen.a */; };
+		B702A2611E8CF1A700DF7D41 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B702A2601E8CF1A700DF7D41 /* icomoon.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -270,6 +271,7 @@
 		8BF22806F33E4284BFBCED93 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		B1BFACC528F668EE94E264B7 /* Pods-ReactNativeInit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeInit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactNativeInit/Pods-ReactNativeInit.debug.xcconfig"; sourceTree = "<group>"; };
 		B3C2ACA69D0945E983AFA54C /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
+		B702A2601E8CF1A700DF7D41 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = icomoon.ttf; path = ../static/icomoon/icomoon.ttf; sourceTree = "<group>"; };
 		D3832B432C4F03B920DF7D20 /* Pods-ReactNativeInit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeInit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReactNativeInit/Pods-ReactNativeInit.release.xcconfig"; sourceTree = "<group>"; };
 		DFDF28F7830D66D58EA8A3CA /* libPods-ReactNativeInit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeInit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB83D01FFEE53BDF2BE53241 /* libPods-ReactNativeInitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeInitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -494,6 +496,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B702A2601E8CF1A700DF7D41 /* icomoon.ttf */,
 				13B07FAE1A68108700A75B9A /* ReactNativeInit */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ReactNativeInitTests */,
@@ -911,6 +914,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B702A2611E8CF1A700DF7D41 /* icomoon.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
