@@ -1,4 +1,5 @@
 PODS:
+  - DCTAuth (3.0)
   - React (0.42.0):
     - React/Core (= 0.42.0)
   - React/Core (0.42.0):
@@ -12,11 +13,14 @@ PODS:
   - Yoga (0.42.0.React)
 
 DEPENDENCIES:
+  - DCTAuth (from `https://github.com/danielctull/DCTAuth.git`)
   - React (from `../node_modules/react-native`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 EXTERNAL SOURCES:
+  DCTAuth:
+    :git: https://github.com/danielctull/DCTAuth.git
   React:
     :path: ../node_modules/react-native
   RNVectorIcons:
@@ -24,11 +28,17 @@ EXTERNAL SOURCES:
   Yoga:
     :path: ../node_modules/react-native/ReactCommon/yoga
 
+CHECKOUT OPTIONS:
+  DCTAuth:
+    :commit: 0a8091a3fc165fb99a6f70cf15b3aed25252dad9
+    :git: https://github.com/danielctull/DCTAuth.git
+
 SPEC CHECKSUMS:
+  DCTAuth: 8add154decd00335d62917828896bba790ce47fd
   React: 8ec97f0d79ba31892c526cf56425937926cc9b48
   RNVectorIcons: d7e2c5eef986d1f594dfd2947df6d6e8093ad1e0
   Yoga: 4183cc70cae189d73f996b1e40c3078aca9f96ef
 
-PODFILE CHECKSUM: 8c1194384b4bf68b0d7ba0c1034d29bf4a0c7eae
+PODFILE CHECKSUM: f6403eb83d79bad22aa2961f6a163e27b5646a5f
 
 COCOAPODS: 1.2.0

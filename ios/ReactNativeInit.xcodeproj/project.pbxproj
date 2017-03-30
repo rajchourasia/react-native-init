@@ -13,7 +13,6 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* ReactNativeInitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ReactNativeInitTests.m */; };
-		0B86EB7E6A3827E2443CC8EE /* libPods-ReactNativeInitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB83D01FFEE53BDF2BE53241 /* libPods-ReactNativeInitTests.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -35,11 +34,13 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* ReactNativeInitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ReactNativeInitTests.m */; };
-		5E89F3E48C3A72E81451133F /* libPods-ReactNativeInit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFDF28F7830D66D58EA8A3CA /* libPods-ReactNativeInit.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		A3D873815008ED438CE27682 /* Pods_ReactNativeInitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 727E61B15A907B54ACD96CE2 /* Pods_ReactNativeInitTests.framework */; };
 		B09B71F65125403B920873D3 /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3C2ACA69D0945E983AFA54C /* libSplashScreen.a */; };
 		B702A2611E8CF1A700DF7D41 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B702A2601E8CF1A700DF7D41 /* icomoon.ttf */; };
+		B702A2EA1E8D1F2700DF7D41 /* libOAuthManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B702A2A51E8D1A8500DF7D41 /* libOAuthManager.a */; };
+		C889A43F0C07B22E5245EFB7 /* Pods_ReactNativeInit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9954225A9228AFD966161E5B /* Pods_ReactNativeInit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,6 +233,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		B702A2A41E8D1A8500DF7D41 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 126CAE4279C64C93BDC4CD92 /* OAuthManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D91353961DA7849100AABC96;
+			remoteInfo = OAuthManager;
+		};
 		B73A2F341E892EEC00FE36EF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8BF22806F33E4284BFBCED93 /* SplashScreen.xcodeproj */;
@@ -251,6 +259,7 @@
 		00E356EE1AD99517003FC87E /* ReactNativeInitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactNativeInitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ReactNativeInitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactNativeInitTests.m; sourceTree = "<group>"; };
+		126CAE4279C64C93BDC4CD92 /* OAuthManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = OAuthManager.xcodeproj; path = "../node_modules/react-native-oauth/ios/OAuthManager.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* ReactNativeInit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactNativeInit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -266,15 +275,16 @@
 		4808E45D54A65E1A4AACB9BC /* Pods-ReactNativeInitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeInitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactNativeInitTests/Pods-ReactNativeInitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		60CED3C930E34D0FC91B2D28 /* Pods-ReactNativeInitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeInitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReactNativeInitTests/Pods-ReactNativeInitTests.release.xcconfig"; sourceTree = "<group>"; };
+		727E61B15A907B54ACD96CE2 /* Pods_ReactNativeInitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReactNativeInitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8BF22806F33E4284BFBCED93 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
+		9954225A9228AFD966161E5B /* Pods_ReactNativeInit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReactNativeInit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1BFACC528F668EE94E264B7 /* Pods-ReactNativeInit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeInit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactNativeInit/Pods-ReactNativeInit.debug.xcconfig"; sourceTree = "<group>"; };
 		B3C2ACA69D0945E983AFA54C /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
 		B702A2601E8CF1A700DF7D41 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = icomoon.ttf; path = ../static/icomoon/icomoon.ttf; sourceTree = "<group>"; };
+		B702A2E91E8D1E3E00DF7D41 /* ReactNativeInit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ReactNativeInit.entitlements; path = ReactNativeInit/ReactNativeInit.entitlements; sourceTree = "<group>"; };
 		D3832B432C4F03B920DF7D20 /* Pods-ReactNativeInit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeInit.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReactNativeInit/Pods-ReactNativeInit.release.xcconfig"; sourceTree = "<group>"; };
-		DFDF28F7830D66D58EA8A3CA /* libPods-ReactNativeInit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeInit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB83D01FFEE53BDF2BE53241 /* libPods-ReactNativeInitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeInitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,7 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
-				0B86EB7E6A3827E2443CC8EE /* libPods-ReactNativeInitTests.a in Frameworks */,
+				A3D873815008ED438CE27682 /* Pods_ReactNativeInitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,9 +311,10 @@
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
+				B702A2EA1E8D1F2700DF7D41 /* libOAuthManager.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				B09B71F65125403B920873D3 /* libSplashScreen.a in Frameworks */,
-				5E89F3E48C3A72E81451133F /* libPods-ReactNativeInit.a in Frameworks */,
+				C889A43F0C07B22E5245EFB7 /* Pods_ReactNativeInit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +423,7 @@
 		13B07FAE1A68108700A75B9A /* ReactNativeInit */ = {
 			isa = PBXGroup;
 			children = (
+				B702A2E91E8D1E3E00DF7D41 /* ReactNativeInit.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -441,8 +453,8 @@
 		4DC9142EE80E592AB07FD9B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DFDF28F7830D66D58EA8A3CA /* libPods-ReactNativeInit.a */,
-				EB83D01FFEE53BDF2BE53241 /* libPods-ReactNativeInitTests.a */,
+				9954225A9228AFD966161E5B /* Pods_ReactNativeInit.framework */,
+				727E61B15A907B54ACD96CE2 /* Pods_ReactNativeInitTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -480,6 +492,7 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				8BF22806F33E4284BFBCED93 /* SplashScreen.xcodeproj */,
+				126CAE4279C64C93BDC4CD92 /* OAuthManager.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -515,6 +528,14 @@
 				00E356EE1AD99517003FC87E /* ReactNativeInitTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* ReactNativeInit-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* ReactNativeInit-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B702A2A11E8D1A8500DF7D41 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B702A2A51E8D1A8500DF7D41 /* libOAuthManager.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -633,7 +654,13 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 9B2CZP34QH;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -658,6 +685,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = B702A2A11E8D1A8500DF7D41 /* Products */;
+					ProjectRef = 126CAE4279C64C93BDC4CD92 /* OAuthManager.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -891,6 +922,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B702A2A51E8D1A8500DF7D41 /* libOAuthManager.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libOAuthManager.a;
+			remoteRef = B702A2A41E8D1A8500DF7D41 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		B73A2F351E892EEC00FE36EF /* libSplashScreen.a */ = {
@@ -1133,6 +1171,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 				);
 				INFOPLIST_FILE = ReactNativeInitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1159,6 +1198,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 				);
 				INFOPLIST_FILE = ReactNativeInitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1181,13 +1221,15 @@
 			baseConfigurationReference = B1BFACC528F668EE94E264B7 /* Pods-ReactNativeInit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ReactNativeInit/ReactNativeInit.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9B2CZP34QH;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 				);
 				INFOPLIST_FILE = ReactNativeInit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1207,12 +1249,14 @@
 			baseConfigurationReference = D3832B432C4F03B920DF7D20 /* Pods-ReactNativeInit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ReactNativeInit/ReactNativeInit.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9B2CZP34QH;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 				);
 				INFOPLIST_FILE = ReactNativeInit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1242,6 +1286,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 				);
 				INFOPLIST_FILE = "ReactNativeInit-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1276,6 +1321,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 				);
 				INFOPLIST_FILE = "ReactNativeInit-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

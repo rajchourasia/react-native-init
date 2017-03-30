@@ -9,7 +9,7 @@ import LoggedInScreen from './LoggedInScreen';
 
 class AppContainer extends Component {
   componentWillMount() {
-    this.props.initialiseUser();
+    this.props.getAuthenticatedUser();
   }
   componentWillUpdate(nextProps) {
     if (nextProps.user.initialiased
@@ -46,7 +46,7 @@ AppContainer.propTypes = {
     id: PropTypes.string,
     initialiased: PropTypes.bool,
   }),
-  initialiseUser: PropTypes.func,
+  getAuthenticatedUser: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
