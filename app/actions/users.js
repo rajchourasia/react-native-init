@@ -14,7 +14,7 @@ export function getUserDetails(uid) {
           },
         };
         return dispatch({
-          type: types.LOG_IN,
+          type: types.UPDATE_USER_DETAILS,
           user,
         });
       })
@@ -43,12 +43,8 @@ export function getAuthenticatedUser() {
       })
       .catch(err => {
         console.log(err);
-        const user = {
-          initialiased: true,
-        };
         return dispatch({
-          type: types.USER_INIT,
-          user,
+          type: types.APP_INIT,
         });
       });
   };

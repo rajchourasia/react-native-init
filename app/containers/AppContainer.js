@@ -5,29 +5,27 @@ import { View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { ActionCreators } from '../actions';
 import LoginScreen from './LoginScreen.js';
-import LoggedInScreen from './LoggedInScreen';
+import LoggedInAppContainer from './LoggedInScreens/LoggedInAppContainer';
 
 class AppContainer extends Component {
   componentWillMount() {
     this.props.getAuthenticatedUser();
   }
   componentWillUpdate(nextProps) {
-    if (nextProps.user.initialiased
-      && (this.props.user.initialiased !== nextProps.user.initialiased)) {
+    if (nextProps.application.initialiased
+      && (this.props.application.initialiased !== nextProps.application.initialiased)) {
       // Hide splash screen.
       SplashScreen.hide();
     }
   }
   render() {
-    if (!this.props.user || (this.props.user && !this.props.user.initialiased)) {
-      return <View />;
-    }
-    if (this.props.user && this.props.user.initialiased && !this.props.user.id) {
+    if (this.props.application && this.props.application.initialiased) {
+      if (this.props.application.authenticated) {
+        return <LoggedInAppContainer />;
+      }
       return <LoginScreen {...this.props} />;
     }
-    return (
-      <LoggedInScreen {...this.props} />
-    );
+    return <View />;
   }
 }
 
@@ -37,13 +35,13 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
+    application: state.application,
   };
 }
 
 AppContainer.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.string,
+  application: PropTypes.shape({
+    authenticated: PropTypes.bool,
     initialiased: PropTypes.bool,
   }),
   getAuthenticatedUser: PropTypes.func,
