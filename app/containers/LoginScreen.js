@@ -13,6 +13,14 @@ import {
   Text,
 } from 'react-native';
 
+import { createIconSetFromIcoMoon } from 'react-native-vector-icons';
+import icoMoonConfig from '../../static/icomoon/selection.json';
+
+const logoImage = require('../../static/logo.png');
+
+const alertMessage = 'Because Goodreads is awesome';
+const Icon = createIconSetFromIcoMoon(icoMoonConfig);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -51,14 +59,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-
-const logoImage = require('../../static/logo.png');
-
-const alertMessage = 'Because Goodreads is awesome';
-
-import { createIconSetFromIcoMoon } from 'react-native-vector-icons';
-import icoMoonConfig from '../../static/icomoon/selection.json';
-const Icon = createIconSetFromIcoMoon(icoMoonConfig);
 
 class LoginScreen extends Component {
   constructor(props) {

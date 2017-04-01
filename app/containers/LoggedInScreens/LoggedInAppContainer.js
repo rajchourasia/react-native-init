@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { TabBarIOS } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import AccountsScreen from './AccountsScreen';
+import ProfileScreen from './ProfileScreen';
 import HomeScreen from './HomeScreen';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 class LoggedInAppContainer extends Component {
   constructor(props) {
@@ -18,8 +18,8 @@ class LoggedInAppContainer extends Component {
       <TabBarIOS>
         <Icon.TabBarItemIOS
           title="Home"
-          iconName="ios-home-outline"
-          selectedIconName="ios-home"
+          iconName="home"
+          selectedIconName="home"
           selected={this.state.selectedTab === 'homeTab'}
           onPress={() => {
             this.setState({
@@ -30,17 +30,17 @@ class LoggedInAppContainer extends Component {
           <HomeScreen />
         </Icon.TabBarItemIOS>
         <Icon.TabBarItemIOS
-          title="Account"
-          iconName="ios-settings-outline"
-          selectedIconName="ios-settings"
-          selected={this.state.selectedTab === 'accountsTab'}
+          title="Profile"
+          iconName="face"
+          selectedIconName="face"
+          selected={this.state.selectedTab === 'profileTab'}
           onPress={() => {
             this.setState({
-              selectedTab: 'accountsTab',
+              selectedTab: 'profileTab',
             });
           }}
         >
-          <AccountsScreen />
+          <ProfileScreen />
         </Icon.TabBarItemIOS>
       </TabBarIOS>
     );
