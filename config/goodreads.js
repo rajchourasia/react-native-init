@@ -1,6 +1,6 @@
 const oauthConfig = Object.assign({
-  consumer_key: 'pFk2oQyiDtiEpFzZrDR6g',
-  consumer_secret: '7uyjbMlRDlQYhdl6cyzOReoFz5bojBSzb0skGG34',
+  consumer_key: '',
+  consumer_secret: '',
 });
 
 export default oauthConfig;
