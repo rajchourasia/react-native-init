@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     padding: 10,
   },
+  profileImage: {
+    width: 50,
+    height: 50,
+  },
   logoutContainer: {
     flex: 3,
     alignItems: 'center',
@@ -53,8 +57,8 @@ const ProfileScreen = (props) => (
         source={props.user.image && props.user.image.default ? {
           uri: props.user.image.default } : null
         }
-        icon={{ name: 'user' }}
-        containerStyle={{ width: 50, height: 50 }}
+        icon={{ type: 'MaterialIcons', name: 'person' }}
+        containerStyle={styles.profileImage}
       />
       <Text style={styles.name}>
         {props.user ? props.user.name : null}

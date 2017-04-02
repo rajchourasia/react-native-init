@@ -1,5 +1,7 @@
 import * as types from './types';
 import GoodreadsApi from '../lib/goodreadsApi';
+import { modelUser } from '../utils/goodreadsDataModel';
+import { getBooksFromAllShelves } from './shelves';
 
 export function getUserDetails(uid) {
   return (dispatch) => {
@@ -7,12 +9,10 @@ export function getUserDetails(uid) {
     return GoodreadsApi.get(url)
       .then(resp => {
         const userObject = resp.data.GoodreadsResponse.user;
-        const user = {
-          image: {
-            default: userObject.image_url.text,
-            small: userObject.small_image_url.text,
-          },
-        };
+        const user = modelUser(userObject);
+        if (user.shelves) {
+          dispatch(getBooksFromAllShelves(user));
+        }
         return dispatch({
           type: types.UPDATE_USER_DETAILS,
           user,
@@ -28,12 +28,8 @@ export function getAuthenticatedUser() {
     return GoodreadsApi.get(url)
       .then(resp => {
         const userObject = resp.data.GoodreadsResponse.user;
-        const user = {
-          id: userObject.id,
-          name: userObject.name.text,
-          link: userObject.link.text,
-          initialiased: true,
-        };
+        const user = modelUser(userObject);
+        user.initialiased = true;
         dispatch(getUserDetails(user.id));
 
         return dispatch({

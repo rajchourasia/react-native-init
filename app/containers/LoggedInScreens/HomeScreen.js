@@ -1,22 +1,28 @@
-import React, { PropTypes } from 'react';
-
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   StyleSheet,
-  Text,
+  ListView,
   View,
+  ScrollView,
 } from 'react-native';
+import { SearchBar, List, ListItem } from 'react-native-elements';
+import isEmpty from 'lodash/isEmpty';
+import { ActionCreators } from '../../actions';
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
     backgroundColor: '#F5FCFF',
+  },
+  searchBarContainer: {
+    backgroundColor: '#FFF',
+    paddingTop: 20,
+  },
+  bookListContainer: {
+    flex: 1,
+    marginTop: 0,
   },
   name: {
     fontSize: 20,
@@ -28,19 +34,66 @@ const styles = StyleSheet.create({
   },
 });
 
-const HomeScreen = (props) => (
-  <View style={styles.container}>
-    <Text style={styles.name}>
-      Welcome
-    </Text>
-  </View>
-);
+const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
+class HomeScreen extends Component {
+  search() {
+    return;
+  }
+  render() {
+    const books = this.props.books;
+    let listView = null;
+    if (!isEmpty(books)) {
+      listView = (
+        <List >
+          {
+            Object.keys(books).map((bookKey, index) => (
+              <ListItem
+                key={books[bookKey].id}
+                avatar={{ uri: books[bookKey].image.default }}
+                key={bookKey}
+                title={books[bookKey].title}
+              />
+            ))
+          }
+        </List>
+      );
+    }
+    return (
+      <View style={styles.container}>
+        <View style={styles.searchBarContainer}>
+          <SearchBar
+            lightTheme
+            onChangeText={this.search()}
+            placeholder="Which book?"
+            containerStyle={styles.searchBar}
+            clearButtonMode="while-editing"
+          />
+        </View>
+        <ScrollView style={{ flex:1 }}>
+          <View style={styles.bookListContainer}>
+            { listView  && listView }
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
+}
 
 HomeScreen.propTypes = {
-  user: PropTypes.shape({
-    name: PropTypes.string,
-  }),
-  logOut: PropTypes.func,
+  userId: PropTypes.string,
+  books: PropTypes.object,
 };
 
-export default HomeScreen;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+function mapStateToProps(state) {
+  return {
+    userId: state.user.id,
+    books: state.books,
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
