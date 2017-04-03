@@ -4,6 +4,7 @@ import * as types from '../actions/types';
 export const application = createReducer({
   initialiased: false,
   authenticated: false,
+  homeSearchStatus: false,
 }, {
   [types.LOG_IN](state) {
     return Object.assign({}, state, {
@@ -19,6 +20,11 @@ export const application = createReducer({
   [types.LOG_OUT](state) {
     return Object.assign({}, state, {
       authenticated: false,
+    });
+  },
+  [types.SET_HOME_SEARCH_STATUS](state, action) {
+    return Object.assign({}, state, {
+      homeSearchStatus: action.status,
     });
   },
 });

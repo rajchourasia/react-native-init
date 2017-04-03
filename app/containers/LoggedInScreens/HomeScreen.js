@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   StyleSheet,
-  ListView,
   View,
   ScrollView,
 } from 'react-native';
-import { SearchBar, List, ListItem } from 'react-native-elements';
-import isEmpty from 'lodash/isEmpty';
+import { SearchBar } from 'react-native-elements';
 import { ActionCreators } from '../../actions';
+import SearchActiveScreen from './SearchActiveScreen';
+import BookList from '../../components/Books/BookList';
+import entitiesSelector from '../../selectors/entitiesSelector';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,45 +35,41 @@ const styles = StyleSheet.create({
   },
 });
 
-const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-
 class HomeScreen extends Component {
-  search() {
-    return;
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchActive: false,
+    };
+  }
+  search(text) {
+    if (text && !this.state.searchActive) {
+      this.setState({ searchActive: true });
+    } else if (!text && this.state.searchActive) {
+      this.setState({ searchActive: false });
+    }
+    if (typeof text === 'string') {
+      this.props.searchBooks(text);
+    }
   }
   render() {
-    const books = this.props.books;
-    let listView = null;
-    if (!isEmpty(books)) {
-      listView = (
-        <List >
-          {
-            Object.keys(books).map((bookKey, index) => (
-              <ListItem
-                key={books[bookKey].id}
-                avatar={{ uri: books[bookKey].image.default }}
-                key={bookKey}
-                title={books[bookKey].title}
-              />
-            ))
-          }
-        </List>
-      );
-    }
     return (
       <View style={styles.container}>
         <View style={styles.searchBarContainer}>
           <SearchBar
             lightTheme
-            onChangeText={this.search()}
+            onChangeText={(text) => this.search(text)}
             placeholder="Which book?"
             containerStyle={styles.searchBar}
             clearButtonMode="while-editing"
           />
         </View>
-        <ScrollView style={{ flex:1 }}>
+        <ScrollView style={{ flex: 1 }}>
           <View style={styles.bookListContainer}>
-            { listView  && listView }
+            { this.state.searchActive ?
+              <SearchActiveScreen metaPropName="homeSearchList" /> :
+              <BookList books={this.props.books} /> }
           </View>
         </ScrollView>
       </View>
@@ -83,16 +80,22 @@ class HomeScreen extends Component {
 HomeScreen.propTypes = {
   userId: PropTypes.string,
   books: PropTypes.object,
+  searchBooks: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(ActionCreators, dispatch);
 }
 
+const recordSelector = entitiesSelector();
 function mapStateToProps(state) {
+  const selectorProps = {
+    metaPropName: 'homeList',
+    type: 'books',
+  };
   return {
     userId: state.user.id,
-    books: state.books,
+    books: recordSelector(state, selectorProps),
   };
 }
 

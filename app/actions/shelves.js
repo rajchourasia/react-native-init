@@ -14,24 +14,30 @@ export const getBooksFromShelf = (uid, shelfName, pageNumber) => {
         const shelfObjectReviews = shelfObject.review;
         const shelf = {};
         const books = {};
+        const meta = {
+          homeList: [],
+        };
         const total = parseInt(shelfObject.total, 10);
         if (total === 1) {
           const item = shelfObjectReviews;
           const book = item.book;
           shelf[book.id.text] = modelShelfItem(item);
           books[book.id.text] = modelBook(book);
+          meta.homeList.push(book.id.text);
         } else if (total > 1) {
           for (const item of shelfObjectReviews) {
             const book = item.book;
             shelf[book.id.text] = modelShelfItem(item);
             books[book.id.text] = modelBook(book);
+            meta.homeList.push(book.id.text);
           }
         }
         return dispatch({
           type: types.SHELF_UPDATE,
           shelfName,
           shelf,
-          books,
+          entities: books,
+          meta,
         });
       })
       .catch(err => console.log(err));

@@ -56,8 +56,8 @@ export const modelShelfItem = (item) => {
   return createObject(fields, item);
 };
 
-export const modelBook = (book) => {
-  const fields = {
+export const modelBook = (book, fields = {}) => {
+  const defaultFields = {
     id: 'id',
     title: 'title',
     description: 'description',
@@ -69,5 +69,5 @@ export const modelBook = (book) => {
     },
     author: 'authors.author.name',
   };
-  return createObject(fields, book);
+  return createObject(Object.assign({}, defaultFields, fields), book);
 };
