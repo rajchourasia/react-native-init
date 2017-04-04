@@ -30,6 +30,13 @@ const searchUpdate = (state, action) => {
   return newState;
 };
 
+const bookUpdate = (state, action) => {
+  const newState = Object.assign({}, state);
+  const book = action.book;
+  newState.entities[book.id] = Object.assign(newState.entities[book.id], book);
+  return newState;
+};
+
 export const books = createReducer(booksDefaultState, {
   [types.SHELF_INSERT](state, action) {
     return insertWithoutMeta(state, action);
@@ -39,5 +46,8 @@ export const books = createReducer(booksDefaultState, {
   },
   [types.BOOK_SEARCH_UPDATE](state, action) {
     return searchUpdate(state, action);
+  },
+  [types.BOOK_UPDATE](state, action) {
+    return bookUpdate(state, action);
   },
 });

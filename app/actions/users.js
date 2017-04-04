@@ -1,5 +1,7 @@
+import { AsyncStorage } from 'react-native';
 import * as types from './types';
 import GoodreadsApi from '../lib/goodreadsApi';
+import { FirebaseAuthentication } from '../lib/firebaseApi';
 import { modelUser } from '../utils/goodreadsDataModel';
 import { getBooksFromAllShelves } from './shelves';
 
@@ -26,12 +28,22 @@ export function getAuthenticatedUser() {
   return (dispatch) => {
     const url = 'http://www.goodreads.com/api/auth_user';
     return GoodreadsApi.get(url)
-      .then(resp => {
-        const userObject = resp.data.GoodreadsResponse.user;
+      .then((resp) => Promise.all(
+        [FirebaseAuthentication.loginSignup(resp.data.GoodreadsResponse.user.id), resp]))
+      .then((values) => {
+        const grKey = values[1].data.GoodreadsResponse.Request.key.text;
+        const userObject = values[1].data.GoodreadsResponse.user;
+        const userFirebaseObject = values[0];
         const user = modelUser(userObject);
+        user.fbUid = userFirebaseObject.uid;
+        user.fbEmail = userFirebaseObject.email;
         user.initialiased = true;
         dispatch(getUserDetails(user.id));
-
+        if (grKey) {
+          // Store in AsyncStorage
+          AsyncStorage.setItem('@Goodreads:key', grKey)
+          .catch(err => console.log(err));
+        }
         return dispatch({
           type: types.LOG_IN,
           user,

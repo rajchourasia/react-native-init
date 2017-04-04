@@ -68,8 +68,15 @@ class HomeScreen extends Component {
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.bookListContainer}>
             { this.state.searchActive ?
-              <SearchActiveScreen metaPropName="homeSearchList" /> :
-              <BookList books={this.props.books} /> }
+              <SearchActiveScreen
+                onRowClickReduxAction={this.props.getBookDetails}
+                metaPropName="homeSearchList"
+              /> :
+              <BookList
+                books={this.props.books}
+                onRowClickReduxAction={this.props.getBookDetails}
+              />
+            }
           </View>
         </ScrollView>
       </View>
@@ -81,6 +88,7 @@ HomeScreen.propTypes = {
   userId: PropTypes.string,
   books: PropTypes.object,
   searchBooks: PropTypes.func,
+  getBookDetails: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
