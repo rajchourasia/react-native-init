@@ -2,14 +2,22 @@ import React, { PropTypes } from 'react';
 import { View, TouchableHighlight } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import isEmpty from 'lodash/isEmpty';
+import BookPreviewScreen from '../../containers/Books/BookPreviewScreen';
 
 const staticImage = require('../../../static/logo.png');
 
 const BookList = (props) => {
   const books = props.books ? props.books : null;
 
-  function onPress(bookKey) {
-    props.onRowClickReduxAction(bookKey);
+  function onPress(book) {
+    props.navigator.push({
+      title: book.title,
+      component: BookPreviewScreen,
+      passProps: {
+        book,
+        navigator: props.navigator,
+      },
+    });
   }
   function getBookListView() {
     let listView = null;
@@ -19,12 +27,11 @@ const BookList = (props) => {
           {
             Object.keys(books).map((bookKey, index) => (
               <ListItem
-                onPress={() => onPress(bookKey)}
+                onPress={() => onPress(books[bookKey])}
                 component={TouchableHighlight}
                 key={books[bookKey].id}
                 avatar={!isEmpty(books[bookKey].image)
                   ? { uri: books[bookKey].image.default } : staticImage}
-                key={bookKey}
                 title={books[bookKey].title}
               />
             ))

@@ -7,7 +7,7 @@ const getRecordIds = (state, props) => state[props.type]
 const getEntities = (state, props) => state[props.type] && state[props.type].entities
 && pickBy(state[props.type].entities, (entity) => {
   // Filter only those entities whose records are there in recordIds.
-  const records = state.books.meta[props.metaPropName];
+  const records = state[props.type] && state[props.type].meta[props.metaPropName];
   if (records) {
     return records.find((record) =>
       record === entity.id

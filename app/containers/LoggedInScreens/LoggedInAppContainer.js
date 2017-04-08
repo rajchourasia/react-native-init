@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TabBarIOS } from 'react-native';
+import { TabBarIOS, NavigatorIOS } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import ProfileScreen from './ProfileScreen';
@@ -27,7 +27,13 @@ class LoggedInAppContainer extends Component {
             });
           }}
         >
-          <HomeScreen />
+          <NavigatorIOS
+            initialRoute={{
+              component: HomeScreen,
+              title: 'Home',
+            }}
+            style={{ flex: 1 }}
+          />
         </Icon.TabBarItemIOS>
         <Icon.TabBarItemIOS
           title="Profile"

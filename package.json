@@ -11,6 +11,7 @@
     "lodash": "^4.17.4",
     "react": "15.4.2",
     "react-native": "0.42.0",
+    "react-native-collapsible": "^0.8.0",
     "react-native-elements": "https://github.com/rajchourasia/react-native-elements/tarball/customIconButton",
     "react-native-oauth": "https://github.com/rajchourasia/react-native-oauth/tarball/xmldata",
     "react-native-splash-screen": "^2.0.0",

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { ActionCreators } from '../../actions';
-import SearchActiveScreen from './SearchActiveScreen';
+import HomeSearch from '../Search/HomeSearch';
 import BookList from '../../components/Books/BookList';
 import entitiesSelector from '../../selectors/entitiesSelector';
 
@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
+    marginTop: 70
   },
   searchBarContainer: {
     backgroundColor: '#FFF',
-    paddingTop: 20,
   },
   bookListContainer: {
     flex: 1,
@@ -68,13 +68,13 @@ class HomeScreen extends Component {
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.bookListContainer}>
             { this.state.searchActive ?
-              <SearchActiveScreen
-                onRowClickReduxAction={this.props.getBookDetails}
+              <HomeSearch
                 metaPropName="homeSearchList"
+                navigator={this.props.navigator}
               /> :
               <BookList
                 books={this.props.books}
-                onRowClickReduxAction={this.props.getBookDetails}
+                navigator={this.props.navigator}
               />
             }
           </View>
@@ -88,7 +88,7 @@ HomeScreen.propTypes = {
   userId: PropTypes.string,
   books: PropTypes.object,
   searchBooks: PropTypes.func,
-  getBookDetails: PropTypes.func,
+  navigator: PropTypes.object,
 };
 
 function mapDispatchToProps(dispatch) {

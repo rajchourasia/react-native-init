@@ -1,14 +1,16 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import BookList from '../../components/Books/BookList';
 import entitiesSelector from '../../selectors/entitiesSelector';
+import { ActionCreators } from '../../actions';
 
-const SearchActiveScreen = (props) =>
-  <BookList books={props.books} onRowClickReduxAction={props.onRowClickReduxAction} />;
+const HomeSearch = (props) =>
+  <BookList books={props.books} navigator={props.navigator} />;
 
-SearchActiveScreen.propTypes = {
+HomeSearch.propTypes = {
   books: PropTypes.object,
-  onRowClickReduxAction: PropTypes.func,
+  navigator: PropTypes.object,
 };
 
 const recordSelector = entitiesSelector();
@@ -22,4 +24,8 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default connect(mapStateToProps)(SearchActiveScreen);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeSearch);

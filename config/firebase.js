@@ -1,5 +1,5 @@
 /* eslint-disable */
-export const firebaseConfig = Object.assign({
+const firebaseConfig = Object.assign({
   apiKey: "AIzaSyAF6Bjz5UVK_eAxhoOplbP4eC-OTLsuN0U",
   authDomain: "gread-6b862.firebaseapp.com",
   databaseURL: "https://gread-6b862.firebaseio.com",
@@ -8,3 +8,6 @@ export const firebaseConfig = Object.assign({
     messagingSenderId: "258293733821"
 });
 /* eslint-enable */
+module.exports = {
+  firebaseConfig,
+};
