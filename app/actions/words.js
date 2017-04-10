@@ -1,8 +1,8 @@
-import { AsyncStorage } from 'react-native';
 import * as types from './types';
 import FirebaseSearch from '../lib/firebaseApi/FirebaseSearch';
+import PearsonApi from '../lib/pearsonApi';
 import { FirebaseDatabase } from '../lib/firebaseApi';
-import { modelBook } from '../utils/goodreadsDataModel.js';
+import { modelWord } from '../utils/pearsonDataModel.js';
 
 export const searchWords = (text) =>
   (dispatch) =>
@@ -34,34 +34,27 @@ export const searchWords = (text) =>
       })
       .catch(err => console.log(err));
 
-export const getWordDetails = (bookId) =>
-    (dispatch) =>
-      // Check if books exixtes in Firebase.
-      FirebaseDatabase.getByFieldValue('books', 'id', bookId).then((value) => {
-        // Return if books exists.
-        if (value) {
-          return dispatch({
-            type: types.BOOK_UPDATE,
-            book: value[Object.keys(value)[0]],
-          });
-        }
-        // If book does not exist in firebase.
-        // Get Goodreads Key from AsyncStorage/
-        return AsyncStorage.getItem('@Goodreads:key').then((key) => {
-          const url = `http://www.goodreads.com/book/show/${bookId}.xml?key=${key}`;
-          // Get the book details from Goodreads.
-          return GoodreadsApi.get(url)
-            .then(resp => {
-              // console.log(resp);
-              const searchResultObject = resp.data.GoodreadsResponse.book;
-              const book = modelBook(searchResultObject);
-              // Push info to firebase.
-              FirebaseDatabase.push('books', book);
-              return dispatch({
-                type: types.BOOK_UPDATE,
-                book,
-              });
+export const getWordDetails = (word) =>
+    (dispatch) => {
+      if (!word || !word.id) {
+        return;
+      }
+      // Get the word from pearson.
+      PearsonApi.search(word.name)
+        .then(resp => {
+          console.log(resp);
+          if (resp && resp.count > 0 && resp.results && resp.results.length > 0) {
+            const result = modelWord(resp.results, word);
+            // const relatedWords = result.relatedWords;
+            // Push info to firebase.
+            // FirebaseDatabase.update(`words/${word.id}`, word);
+            return dispatch({
+              type: types.WORD_UPDATE,
+              word: result.word,
+              // relatedWords, @to Do something with related w
             });
-        });
-      })
+          }
+          return null;
+        })
       .catch(err => console.log(err));
+    };

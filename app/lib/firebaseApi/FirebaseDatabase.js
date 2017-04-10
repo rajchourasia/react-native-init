@@ -14,6 +14,23 @@ class FirebaseDatabase {
     return null;
   }
 
+  static set(path, value) {
+    if (path && value) {
+      return firebaseDB.set(path, value);
+    }
+    return null;
+  }
+
+  static update(path, value) {
+    if (path && value) {
+      const updates = {
+        [path]: value,
+      }
+      return firebaseDB.update(updates);
+    }
+    return null;
+  }
+
   static getByFieldValue(path, field, value) {
     return firebaseDB.child(path).orderByChild(field).equalTo(value).once('value')
     .then((objectSnap) => {

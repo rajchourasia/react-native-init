@@ -51,6 +51,7 @@ export function getAuthenticatedUser() {
       })
       .catch(err => {
         console.log(err);
+        GoodreadsApi.deauthorize();
         return dispatch({
           type: types.APP_INIT,
         });

@@ -1,16 +1,16 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import WordList from '../../components/WordList';
+import WordList from '../../components/Words/WordsList';
 import entitiesSelector from '../../selectors/entitiesSelector';
 import { ActionCreators } from '../../actions';
 
 const WordSearch = (props) =>
-  <WordList words={props.words} navigator={props.navigator} />;
+  <WordList words={props.words} getWordDetails={props.getWordDetails} />;
 
 WordSearch.propTypes = {
   words: PropTypes.object,
-  navigator: PropTypes.object,
+  getWordDetails: PropTypes.func,
 };
 
 const recordSelector = entitiesSelector();

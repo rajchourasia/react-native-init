@@ -23,26 +23,18 @@ class FirebaseSearch {
     return newQuery;
   }
   static buildQueryBody(query, term, matchWholePhrase) {
-    const newQuery = query;
-    if (matchWholePhrase) {
-      const addQuery = {
-        // match_phrase matches the phrase exactly instead of breaking it
-        // into individual words
-        "match_phrase": {
-          // this is the field name, _all is a meta indicating any field
-          "_all": term
+    const addquery = {
+      body: {
+        query: {
+          match_phrase_prefix: {
+            name: term,
+          },
         },
-        /**
-         * Match breaks up individual words and matches any
-         * This is the equivalent of the `q` string below
-        "match": {
-          "_all": term
-        }
-        */
-      };
-      newQuery.body = Object.assign(addQuery, query.body);
-    } else {
-      newQuery.q = `${term}*`;
+      },
+    };
+    const newQuery = Object.assign({}, addquery, query);
+    if (matchWholePhrase) {
+      // Do nothing.
     }
     return newQuery;
   }

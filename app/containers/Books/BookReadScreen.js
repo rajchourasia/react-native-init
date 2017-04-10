@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { ActionCreators } from '../../actions';
-import WordList from '../../components/WordList';
+import WordsList from '../../components/Words/WordsList';
 import WordSearch from '../Search/WordSearch';
 
 const styles = StyleSheet.create({
@@ -60,10 +60,11 @@ class BookReadScreen extends Component {
           <View style={styles.wordListContainer}>
             { this.state.searchActive && <WordSearch
               metaPropName="wordSearchList"
-              navigator={this.props.navigator}
+              getWordDetails={this.props.getWordDetails}
             />}
-            <WordList
+            <WordsList
               words={this.props.words}
+              getWordDetails={this.props.getWordDetails}
             />
           </View>
         </ScrollView>
@@ -77,6 +78,7 @@ BookReadScreen.propTypes = {
   words: PropTypes.object,
   navigator: PropTypes.object,
   searchWords: PropTypes.func,
+  getWordDetails: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
