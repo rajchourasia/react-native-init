@@ -34,7 +34,7 @@ const createShelves = (user) => {
 
 export const modelUser = (user) => {
   const fields = {
-    id: 'id',
+    grid: 'id',
     name: 'name',
     link: 'link',
     image: {
@@ -49,7 +49,7 @@ export const modelUser = (user) => {
 
 export const modelShelfItem = (item) => {
   const fields = {
-    id: 'book.id',
+    grid: 'book.id',
     dateAdded: 'date_added',
     dateUpdated: 'date_updated',
   };
@@ -58,7 +58,7 @@ export const modelShelfItem = (item) => {
 
 export const modelBook = (book, fields = {}) => {
   const defaultFields = {
-    id: 'id',
+    grid: 'id',
     title: 'title',
     description: 'description',
     isbn: 'isbn',

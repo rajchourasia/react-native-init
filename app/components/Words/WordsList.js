@@ -20,6 +20,9 @@ const WordsList = (props) => {
                 key={wordKey}
                 word={words[wordKey]}
                 getWordDetails={props.getWordDetails}
+                setWordView={props.setWordView}
+                book={props.book}
+                userId={props.userId}
               />
             ))
           }
@@ -38,7 +41,10 @@ const WordsList = (props) => {
 
 WordsList.propTypes = {
   words: PropTypes.object,
+  book: PropTypes.object,
+  userId: PropTypes.string,
   getWordDetails: PropTypes.func,
+  setWordView: PropTypes.func,
 };
 
 export default WordsList;

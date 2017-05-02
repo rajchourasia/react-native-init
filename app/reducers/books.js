@@ -33,7 +33,7 @@ const searchUpdate = (state, action) => {
 const bookUpdate = (state, action) => {
   const newState = Object.assign({}, state);
   const book = action.book;
-  newState.entities[book.id] = Object.assign(newState.entities[book.id], book);
+  newState.entities[book.grid] = Object.assign(newState.entities[book.grid], book);
   return newState;
 };
 

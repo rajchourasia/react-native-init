@@ -6,11 +6,20 @@ import entitiesSelector from '../../selectors/entitiesSelector';
 import { ActionCreators } from '../../actions';
 
 const WordSearch = (props) =>
-  <WordList words={props.words} getWordDetails={props.getWordDetails} />;
+  <WordList
+    words={props.words}
+    getWordDetails={props.getWordDetails}
+    setWordView={props.setWordView}
+    book={props.book}
+    userId={props.userId}
+  />;
 
 WordSearch.propTypes = {
   words: PropTypes.object,
   getWordDetails: PropTypes.func,
+  setWordView: PropTypes.func,
+  book: PropTypes.object,
+  userId: PropTypes.string,
 };
 
 const recordSelector = entitiesSelector();

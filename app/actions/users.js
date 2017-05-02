@@ -35,10 +35,9 @@ export function getAuthenticatedUser() {
         const userObject = values[1].data.GoodreadsResponse.user;
         const userFirebaseObject = values[0];
         const user = modelUser(userObject);
-        user.fbUid = userFirebaseObject.uid;
-        user.fbEmail = userFirebaseObject.email;
-        user.initialiased = true;
-        dispatch(getUserDetails(user.id));
+        user.id = userFirebaseObject.uid;
+        user.email = userFirebaseObject.email;
+        dispatch(getUserDetails(user.grid));
         if (grKey) {
           // Store in AsyncStorage
           AsyncStorage.setItem('@Goodreads:key', grKey)

@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View, TouchableHighlight, Text } from 'react-native';
+import { View, TouchableHighlight, Text, Keyboard } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Collapsible from 'react-native-collapsible';
 
@@ -11,14 +11,21 @@ class WordsListItem extends Component {
       collapsed: true,
     };
   }
-  onPress(word) {
+  onPress(word, book, userId) {
+    // Hide the keyboard on click.
+    Keyboard.dismiss();
+    if (this.state.collapsed) {
+      // Get word details.
+      this.props.getWordDetails(word);
+      // update hit.
+      this.props.setWordView(word, book, userId);
+    }
     this.setState({
       collapsed: !this.state.collapsed,
     });
-    this.props.getWordDetails(word);
   }
   render() {
-    const word = this.props.word ? this.props.word : '';
+    const { word, book, userId } = this.props;
     const collapsed = this.state.collapsed;
     if (!word) {
       return <View />;
@@ -26,12 +33,12 @@ class WordsListItem extends Component {
     return (
       <View>
         <ListItem
-          onPress={() => this.onPress(word)}
+          onPress={() => this.onPress(word, book, userId)}
           component={TouchableHighlight}
           title={word.name}
         />
         <Collapsible collapsed={collapsed}>
-          <Text>THis</Text>
+          <Text>Meaning</Text>
           {word.meanings && word.meanings.map((meaning, key) => (
             <View key={key}>
               <Text>
@@ -39,6 +46,20 @@ class WordsListItem extends Component {
               </Text>
             </View>
           ))}
+          {(!word.meanings || (word.meanings && word.meanings.length <= 0))
+            && word.relatedWords && word.relatedWords[0] &&
+            <View>
+              <Text>
+                Name : {word.relatedWords[0].details
+                  && word.relatedWords[0].name ? word.relatedWords[0].name : ''}
+              </Text>
+              <Text>
+                {word.relatedWords[0].details
+                  && word.relatedWords[0].details[0]
+                  ? word.relatedWords[0].details[0].definition[0] : ''}
+              </Text>
+            </View>
+          }
         </Collapsible>
       </View>
     );
@@ -46,8 +67,11 @@ class WordsListItem extends Component {
 }
 
 WordsListItem.propTypes = {
+  book: PropTypes.object,
+  userId: PropTypes.string,
   word: PropTypes.object,
   getWordDetails: PropTypes.func,
+  setWordView: PropTypes.func,
 };
 
 export default WordsListItem;

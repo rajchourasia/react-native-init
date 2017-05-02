@@ -10,7 +10,7 @@ const getEntities = (state, props) => state[props.type] && state[props.type].ent
   const records = state[props.type] && state[props.type].meta[props.metaPropName];
   if (records) {
     return records.find((record) =>
-      record === entity.id
+      (entity.grid && (record === entity.grid)) || (entity.id && (record === entity.id))
     );
   }
   return null;

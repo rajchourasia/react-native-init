@@ -46,5 +46,5 @@ export const getBooksFromShelf = (uid, shelfName, pageNumber) => {
 
 export const getBooksFromAllShelves = (user) =>
   (dispatch) => {
-    user.shelves.map((value) => dispatch(getBooksFromShelf(user.id, value)));
+    user.shelves.map((value) => dispatch(getBooksFromShelf(user.grid, value)));
   };

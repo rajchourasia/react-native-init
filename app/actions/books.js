@@ -39,12 +39,15 @@ export const searchBooks = (string) =>
 export const getBookDetails = (bookId) =>
     (dispatch) =>
       // Check if books exixtes in Firebase.
-      FirebaseDatabase.getByFieldValue('books', 'id', bookId).then((value) => {
+      FirebaseDatabase.getByFieldValue('books', 'grid', bookId).then((value) => {
         // Return if books exists.
         if (value) {
+          const id = Object.keys(value)[0];
+          const book = value[id];
+          book.id = id;
           return dispatch({
             type: types.BOOK_UPDATE,
-            book: value[Object.keys(value)[0]],
+            book,
           });
         }
         // If book does not exist in firebase.
@@ -58,10 +61,14 @@ export const getBookDetails = (bookId) =>
               const searchResultObject = resp.data.GoodreadsResponse.book;
               const book = modelBook(searchResultObject);
               // Push info to firebase.
-              FirebaseDatabase.push('books', book);
-              return dispatch({
-                type: types.BOOK_UPDATE,
-                book,
+              FirebaseDatabase.push('books', book).then((bookvalue) => {
+                if (bookvalue) {
+                  book.id = bookvalue;
+                }
+                return dispatch({
+                  type: types.BOOK_UPDATE,
+                  book,
+                });
               });
             });
         });

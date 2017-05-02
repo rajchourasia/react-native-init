@@ -29,7 +29,7 @@ const BookList = (props) => {
               <ListItem
                 onPress={() => onPress(books[bookKey])}
                 component={TouchableHighlight}
-                key={books[bookKey].id}
+                key={books[bookKey].grid}
                 avatar={!isEmpty(books[bookKey].image)
                   ? { uri: books[bookKey].image.default } : staticImage}
                 title={books[bookKey].title}

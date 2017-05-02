@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
 class BookPreviewScreen extends Component {
   componentWillMount() {
     const book = this.props.book;
-    if (book && !book.isbn) {
-      this.props.getBookDetails(book.id);
+    if (book && !book.id) {
+      this.props.getBookDetails(book.grid);
     }
   }
   openBook(props) {

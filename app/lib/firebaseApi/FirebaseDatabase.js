@@ -8,8 +8,12 @@ class FirebaseDatabase {
       // Write the new post's data simultaneously in the posts list and the user's post list.
       const updates = {};
       updates[`${path}/${newPostKey}`] = value;
-
-      return firebaseDB.update(updates);
+      return new Promise((resolve, reject) => {
+        firebaseDB.update(updates).then(() => resolve(newPostKey))
+        .catch(err => {
+          reject(err);
+        });
+      });
     }
     return null;
   }
