@@ -12,15 +12,15 @@ class AppContainer extends Component {
     this.props.getAuthenticatedUser();
   }
   componentWillUpdate(nextProps) {
-    if (nextProps.application.initialiased
-      && (this.props.application.initialiased !== nextProps.application.initialiased)) {
+    if (nextProps.initialiased
+      && (this.props.initialiased !== nextProps.initialiased)) {
       // Hide splash screen.
       SplashScreen.hide();
     }
   }
   render() {
-    if (this.props.application && this.props.application.initialiased) {
-      if (this.props.application.authenticated) {
+    if (this.props.initialiased) {
+      if (this.props.authenticated) {
         return <LoggedInAppContainer />;
       }
       return <LoginScreen {...this.props} />;
@@ -35,15 +35,14 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    application: state.application,
+    authenticated: state.application.authenticated,
+    initialiased: state.application.initialiased,
   };
 }
 
 AppContainer.propTypes = {
-  application: PropTypes.shape({
-    authenticated: PropTypes.bool,
-    initialiased: PropTypes.bool,
-  }),
+  authenticated: PropTypes.bool,
+  initialiased: PropTypes.bool,
   getAuthenticatedUser: PropTypes.func,
 };
 

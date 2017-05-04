@@ -38,7 +38,7 @@ class BookReadScreen extends Component {
   }
   componentWillMount() {
     const { words, book, userId } = this.props;
-    if (!words) {
+    if (!words && book) {
       this.props.getWordListByBookId(book.id, userId);
     }
   }
@@ -120,7 +120,8 @@ BookReadScreen.propTypes = {
   getWordListByBookId: PropTypes.func,
 };
 
-const recordSelector = entitiesSelector();
+const recordsSelector = entitiesSelector();
+
 function mapStateToProps(state, props) {
   const book = props.book;
   const metaPropName = `book/${book.id}/wordList`;
@@ -130,7 +131,7 @@ function mapStateToProps(state, props) {
   };
   return {
     userId: state.user.id,
-    words: recordSelector(state, selectorProps),
+    words: recordsSelector(state, selectorProps),
   };
 }
 

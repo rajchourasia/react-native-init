@@ -47,6 +47,9 @@ class BookPreviewScreen extends Component {
   }
   render() {
     const book = this.props.book;
+    if (!book) {
+      return <View />;
+    }
     return (
       <View style={styles.container}>
         <Image style={styles.image} resizeMode={'contain'} source={{ uri: book.image.default }} />
@@ -72,10 +75,19 @@ class BookPreviewScreen extends Component {
 BookPreviewScreen.propTypes = {
   book: PropTypes.object,
   getBookDetails: PropTypes.func,
+  appSetReadingStatus: PropTypes.func,
 };
+
+function mapStateToProps(state, props) {
+  const bookGrid = props.bookGrid;
+  const book = state.books.entities[bookGrid];
+  return {
+    book,
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(ActionCreators, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(BookPreviewScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(BookPreviewScreen);

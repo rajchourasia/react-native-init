@@ -2,7 +2,10 @@ import React, { PropTypes } from 'react';
 import { View, TouchableHighlight } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import isEmpty from 'lodash/isEmpty';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import BookPreviewScreen from '../../containers/Books/BookPreviewScreen';
+import { ActionCreators } from '../../actions';
 
 const staticImage = require('../../../static/logo.png');
 
@@ -10,14 +13,8 @@ const BookList = (props) => {
   const books = props.books ? props.books : null;
 
   function onPress(book) {
-    props.navigator.push({
-      title: book.title,
-      component: BookPreviewScreen,
-      passProps: {
-        book,
-        navigator: props.navigator,
-      },
-    });
+    // Set Reading.
+    props.appSetReadingStatus(book.grid);
   }
   function getBookListView() {
     let listView = null;
@@ -52,6 +49,11 @@ const BookList = (props) => {
 BookList.propTypes = {
   books: PropTypes.object,
   onRowClickReduxAction: PropTypes.func,
+  appSetReadingStatus: PropTypes.func,
 };
 
-export default BookList;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(BookList);

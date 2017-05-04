@@ -5,6 +5,10 @@ export const application = createReducer({
   initialiased: false,
   authenticated: false,
   homeSearchStatus: false,
+  reading: {
+    status: false,
+    bookid: '',
+  },
 }, {
   [types.LOG_IN](state) {
     return Object.assign({}, state, {
@@ -25,6 +29,14 @@ export const application = createReducer({
   [types.SET_HOME_SEARCH_STATUS](state, action) {
     return Object.assign({}, state, {
       homeSearchStatus: action.status,
+    });
+  },
+  [types.SET_READING_STATUS](state, action) {
+    return Object.assign({}, state, {
+      reading: {
+        status: action.status,
+        bookGrid: action.bookGrid,
+      },
     });
   },
 });

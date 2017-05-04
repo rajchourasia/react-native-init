@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { TabBarIOS, NavigatorIOS } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { connect } from 'react-redux';
 
 import ProfileScreen from './ProfileScreen';
 import HomeScreen from './HomeScreen';
+import BookPreviewScreen from '../Books/BookPreviewScreen.js';
 
 class LoggedInAppContainer extends Component {
   constructor(props) {
@@ -12,6 +14,21 @@ class LoggedInAppContainer extends Component {
     this.state = {
       selectedTab: 'homeTab',
     };
+  }
+  componentWillUpdate(nextProps) {
+    if (this.isReading(nextProps)
+    && (!this.isReading(this.props)
+    || this.props.reading.bookGrid !== nextProps.reading.bookGrid)) {
+      this.setState({
+        selectedTab: 'readingTab',
+      });
+    }
+  }
+  isReading(props) {
+    if (props.reading && props.reading.status && props.reading.bookGrid) {
+      return true;
+    }
+    return false;
   }
   render() {
     return (
@@ -35,6 +52,31 @@ class LoggedInAppContainer extends Component {
             style={{ flex: 1 }}
           />
         </Icon.TabBarItemIOS>
+        {this.isReading(this.props) &&
+          <Icon.TabBarItemIOS
+            key={this.props.reading.bookGrid}
+            title="Reading"
+            iconName="book"
+            selectedIconName="book"
+            selected={this.state.selectedTab === 'readingTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'readingTab',
+              });
+            }}
+          >
+            <NavigatorIOS
+              initialRoute={{
+                component: BookPreviewScreen,
+                title: 'Reading',
+                passProps: {
+                  bookGrid: this.props.reading.bookGrid,
+                },
+              }}
+              style={{ flex: 1 }}
+            />
+          </Icon.TabBarItemIOS>
+        }
         <Icon.TabBarItemIOS
           title="Profile"
           iconName="face"
@@ -53,4 +95,17 @@ class LoggedInAppContainer extends Component {
   }
 }
 
-export default LoggedInAppContainer;
+LoggedInAppContainer.propTypes = {
+  reading: PropTypes.shape({
+    state: PropTypes.string,
+    bookGrid: PropTypes.string,
+  }),
+};
+
+function mapStateToProps(state) {
+  return {
+    reading: state.application.reading,
+  };
+}
+
+export default connect(mapStateToProps)(LoggedInAppContainer);
