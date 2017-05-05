@@ -15,6 +15,7 @@ const BookList = (props) => {
   function onPress(book) {
     // Set Reading.
     props.appSetReadingStatus(book.grid);
+    props.selectReadingTab();
   }
   function getBookListView() {
     let listView = null;

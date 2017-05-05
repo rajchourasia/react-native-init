@@ -71,10 +71,12 @@ class HomeScreen extends Component {
               <HomeSearch
                 metaPropName="homeSearchList"
                 navigator={this.props.navigator}
+                selectReadingTab={this.props.selectReadingTab}
               /> :
               <BookList
                 books={this.props.books}
                 navigator={this.props.navigator}
+                selectReadingTab={this.props.selectReadingTab}
               />
             }
           </View>
@@ -88,6 +90,7 @@ HomeScreen.propTypes = {
   userId: PropTypes.string,
   books: PropTypes.object,
   searchBooks: PropTypes.func,
+  selectReadingTab: PropTypes.func,
   navigator: PropTypes.object,
 };
 

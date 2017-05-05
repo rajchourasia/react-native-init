@@ -14,15 +14,12 @@ class LoggedInAppContainer extends Component {
     this.state = {
       selectedTab: 'homeTab',
     };
+    this.selectReadingTab = this.selectReadingTab.bind(this);
   }
-  componentWillUpdate(nextProps) {
-    if (this.isReading(nextProps)
-    && (!this.isReading(this.props)
-    || this.props.reading.bookGrid !== nextProps.reading.bookGrid)) {
-      this.setState({
-        selectedTab: 'readingTab',
-      });
-    }
+  selectReadingTab() {
+    this.setState({
+      selectedTab: 'readingTab',
+    });
   }
   isReading(props) {
     if (props.reading && props.reading.status && props.reading.bookGrid) {
@@ -48,6 +45,9 @@ class LoggedInAppContainer extends Component {
             initialRoute={{
               component: HomeScreen,
               title: 'Home',
+              passProps: {
+                selectReadingTab: this.selectReadingTab,
+              },
             }}
             style={{ flex: 1 }}
           />
@@ -97,7 +97,7 @@ class LoggedInAppContainer extends Component {
 
 LoggedInAppContainer.propTypes = {
   reading: PropTypes.shape({
-    state: PropTypes.string,
+    status: PropTypes.bool,
     bookGrid: PropTypes.string,
   }),
 };

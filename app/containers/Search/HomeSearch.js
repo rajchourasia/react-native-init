@@ -6,11 +6,16 @@ import entitiesSelector from '../../selectors/entitiesSelector';
 import { ActionCreators } from '../../actions';
 
 const HomeSearch = (props) =>
-  <BookList books={props.books} navigator={props.navigator} />;
+  <BookList
+    books={props.books}
+    navigator={props.navigator}
+    selectReadingTab={props.selectReadingTab}
+  />;
 
 HomeSearch.propTypes = {
   books: PropTypes.object,
   navigator: PropTypes.object,
+  selectReadingTab: PropTypes.func,
 };
 
 const recordSelector = entitiesSelector();
