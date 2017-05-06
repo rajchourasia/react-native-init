@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   ScrollView,
+  Text,
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { ActionCreators } from '../../actions';
@@ -15,15 +16,13 @@ import entitiesSelector from '../../selectors/entitiesSelector';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
-    marginTop: 70
   },
   searchBarContainer: {
-    backgroundColor: '#FFF',
+    paddingTop: 65,
+    maxHeight: 113,
   },
   bookListContainer: {
     flex: 1,
-    marginTop: 0,
   },
   name: {
     fontSize: 20,
@@ -53,6 +52,25 @@ class HomeScreen extends Component {
       this.props.searchBooks(text);
     }
   }
+  getBodyComponent() {
+    const searchActive = this.state.searchActive;
+    if (searchActive) {
+      return (
+        <HomeSearch
+          metaPropName="homeSearchList"
+          navigator={this.props.navigator}
+          selectReadingTab={this.props.selectReadingTab}
+        />
+      );
+    }
+    return (
+      <BookList
+        books={this.props.books}
+        navigator={this.props.navigator}
+        selectReadingTab={this.props.selectReadingTab}
+      />
+    );
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -65,20 +83,13 @@ class HomeScreen extends Component {
             clearButtonMode="while-editing"
           />
         </View>
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView
+          style={{ flex: 1, marginBottom: 50 }}
+          contentInset={{ top: 0 }}
+          automaticallyAdjustContentInsets={false}
+        >
           <View style={styles.bookListContainer}>
-            { this.state.searchActive ?
-              <HomeSearch
-                metaPropName="homeSearchList"
-                navigator={this.props.navigator}
-                selectReadingTab={this.props.selectReadingTab}
-              /> :
-              <BookList
-                books={this.props.books}
-                navigator={this.props.navigator}
-                selectReadingTab={this.props.selectReadingTab}
-              />
-            }
+            { this.getBodyComponent() }
           </View>
         </ScrollView>
       </View>

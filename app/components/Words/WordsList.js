@@ -13,7 +13,7 @@ const WordsList = (props) => {
     let listView = null;
     if (!isEmpty(words)) {
       listView = (
-        <List >
+        <List containerStyle={{ marginTop: 0 }}>
           {
             Object.keys(words).map((wordKey) => (
               <WordsListItem

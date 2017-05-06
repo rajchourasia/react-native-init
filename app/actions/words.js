@@ -1,3 +1,4 @@
+import uniqBy from 'lodash/uniqBy';
 import * as types from './types';
 import FirebaseSearch from '../lib/firebaseApi/FirebaseSearch';
 import PearsonApi from '../lib/pearsonApi';
@@ -42,19 +43,20 @@ export const getWordDetails = (word) =>
       // Get the word from pearson.
       PearsonApi.search(word.name)
         .then(resp => {
-          console.log(resp);
+          // console.log(resp);
+          let result = { word: Object.assign({}, word) };
+          result.word.meaningResult = 404;
           if (resp && resp.count > 0 && resp.results && resp.results.length > 0) {
-            const result = modelWord(resp.results, word);
-            // const relatedWords = result.relatedWords;
+            result = modelWord(resp.results, word);
+            result.word.meaningResult = 200;
             // Push info to firebase.
             // FirebaseDatabase.update(`words/${word.id}`, word);
-            return dispatch({
-              type: types.WORD_UPDATE,
-              word: result.word,
-              // relatedWords, @to Do something with related w
-            });
           }
-          return null;
+          return dispatch({
+            type: types.WORD_UPDATE,
+            word: result.word,
+            // relatedWords, @to Do something with related w
+          });
         })
       .catch(err => console.log(err));
     };
@@ -95,16 +97,18 @@ export const getWordListByBookId = (bookId, userId) =>
       FirebaseDatabase.getByFieldValue(path, 'userId_bookId', filterValue).then((values) => {
         if (values) {
           const wordList = {};
-          const wordIds = Object.keys(values).sort((a, b) =>
-            values[b].timestamp - values[a].timestamp).map((value) => {
-              const wordId = values[value].wordId;
-              const name = values[value].name;
-              wordList[wordId] = {
-                name,
-                id: wordId,
-              };
-              return wordId;
-            });
+          const sortedKeys = Object.keys(values).sort((a, b) =>
+            values[b].timestamp - values[a].timestamp);
+          const uniqueKeys = uniqBy(sortedKeys, (e) => values[e].wordId);
+          const wordIds = uniqueKeys.map((value) => {
+            const wordId = values[value].wordId;
+            const name = values[value].name;
+            wordList[wordId] = {
+              name,
+              id: wordId,
+            };
+            return wordId;
+          });
           const metaPropName = `book/${bookId}/wordList`;
           return dispatch({
             type: types.WORD_META_SET,

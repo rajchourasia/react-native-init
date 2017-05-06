@@ -1,11 +1,30 @@
 import React, { PropTypes, Component } from 'react';
-import { View, TouchableHighlight, Text, Keyboard } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Collapsible from 'react-native-collapsible';
-import RNAudioStreamer from 'react-native-audio-streamer';
-import pearsonConfig from '../../../config/pearson';
+import {
+  View,
+  Text,
+  TouchableHighlight,
+  ActivityIndicator,
+  Keyboard,
+  StyleSheet }
+from 'react-native';
 
-const pearsonBasePath = pearsonConfig.basePath;
+import WordMeaningCard from './WordMeaningCard';
+
+const styles = StyleSheet.create({
+  centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
+  notFound: {
+    height: 80,
+  },
+  notFoundText: {
+    fontStyle: 'italic',
+  },
+});
 
 class WordsListItem extends Component {
   constructor(props) {
@@ -28,11 +47,26 @@ class WordsListItem extends Component {
       collapsed: !this.state.collapsed,
     });
   }
-  play(url) {
-    if (url) {
-      const audiopath = `${pearsonBasePath}${url}`;
-      RNAudioStreamer.setUrl(audiopath);
-      RNAudioStreamer.play();
+  getCollapsible(word) {
+    switch (word.meaningResult) {
+      case 404:
+        return (
+          <View style={[styles.centering, styles.notFound]}>
+            <Text style={styles.notFoundText}>Sorry, word meaning not found</Text>
+          </View>
+        );
+
+      case 200:
+        return <WordMeaningCard style={{ paddingLeft: 20, paddingRight: 20 }} word={word} />;
+
+      default:
+        return (
+          <ActivityIndicator
+            style={[styles.centering, { height: 80 }]}
+            size="small"
+            color="grey"
+          />
+        );
     }
   }
   render() {
@@ -49,49 +83,7 @@ class WordsListItem extends Component {
           title={word.name}
         />
         <Collapsible collapsed={collapsed}>
-          <Text>Meaning</Text>
-          {word.meanings && word.meanings.map((meaning, key) => (
-            <View key={key}>
-              <Text>
-                {meaning.details && meaning.details[0] ? meaning.details[0].definition[0] : ''}
-              </Text>
-              {
-                meaning.pronunciations && meaning.pronunciations[0]
-                && meaning.pronunciations[0].audio
-                && meaning.pronunciations[0].audio[0]
-                && <TouchableHighlight
-                  onPress={() => this.play(meaning.pronunciations[0].audio[0].url)}
-                >
-                  <Text>Audio</Text>
-                </TouchableHighlight>
-              }
-            </View>
-          ))}
-          {(!word.meanings || (word.meanings && word.meanings.length <= 0))
-            && word.relatedWords && word.relatedWords[0] &&
-            <View>
-              <Text>
-                Name : {word.relatedWords[0].details
-                  && word.relatedWords[0].name ? word.relatedWords[0].name : ''}
-              </Text>
-              <Text>
-                {word.relatedWords[0].details
-                  && word.relatedWords[0].details[0]
-                  ? word.relatedWords[0].details[0].definition[0] : ''}
-              </Text>
-              {word.relatedWords && word.relatedWords[0]
-                && word.relatedWords[0].pronunciations
-                && word.relatedWords[0].pronunciations[0]
-                && word.relatedWords[0].pronunciations[0].audio
-                && word.relatedWords[0].pronunciations[0].audio[0]
-                && <TouchableHighlight
-                  onPress={() => this.play(word.relatedWords[0].pronunciations[0].audio[0].url)}
-                >
-                  <Text>Audio</Text>
-                </TouchableHighlight>
-               }
-            </View>
-          }
+          { this.getCollapsible(word) }
         </Collapsible>
       </View>
     );

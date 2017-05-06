@@ -4,7 +4,6 @@ import { List, ListItem } from 'react-native-elements';
 import isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import BookPreviewScreen from '../../containers/Books/BookPreviewScreen';
 import { ActionCreators } from '../../actions';
 
 const staticImage = require('../../../static/logo.png');
@@ -21,7 +20,7 @@ const BookList = (props) => {
     let listView = null;
     if (!isEmpty(books)) {
       listView = (
-        <List >
+        <List containerStyle={{ marginTop: 0 }}>
           {
             Object.keys(books).map((bookKey, index) => (
               <ListItem

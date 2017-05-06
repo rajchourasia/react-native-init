@@ -15,12 +15,11 @@ import entitiesSelector from '../../selectors/entitiesSelector';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
   },
   searchBarContainer: {
-    backgroundColor: '#FFF',
-    marginTop: 65,
     zIndex: 10,
+    paddingTop: 65,
+    maxHeight: 113,
   },
   wordListContainer: {
     flex: 1,
@@ -65,34 +64,23 @@ class BookReadScreen extends Component {
             containerStyle={styles.searchBar}
             clearButtonMode="while-editing"
           />
-          { this.state.searchActive &&
-            <View
-              style={{
-                position: 'absolute',
-                left: 0,
-                right: 0,
-                height: 300,
-                top: 28,
-                flex: 1,
-                overflow: 'scroll',
-              }}
-            >
-              <ScrollView
-                style={{ flex: 1 }}
-                keyboardShouldPersistTaps="handled"
-              >
-                <WordSearch
-                  metaPropName="wordSearchList"
-                  getWordDetails={this.props.getWordDetails}
-                  setWordView={this.props.setWordView}
-                  userId={this.props.userId}
-                  book={this.props.book}
-                />
-              </ScrollView>
-            </View>
-            }
         </View>
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView
+          style={{ flex: 1, marginBottom: 50 }}
+          contentInset={{ top: 0 }}
+          automaticallyAdjustContentInsets={false}
+        >
+        { this.state.searchActive &&
+          <View style={{ flex: 1 }}>
+            <WordSearch
+              metaPropName="wordSearchList"
+              getWordDetails={this.props.getWordDetails}
+              setWordView={this.props.setWordView}
+              userId={this.props.userId}
+              book={this.props.book}
+            />
+          </View>
+          }
           <View style={styles.wordListContainer}>
             <WordsList
               words={this.props.words}

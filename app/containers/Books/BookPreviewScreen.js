@@ -17,13 +17,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFF',
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   image: {
     width: 300,
     height: 200,
   },
   commonMargin: {
-    marginTop: 10,
+    marginTop: 16,
   },
 });
 
@@ -53,19 +55,19 @@ class BookPreviewScreen extends Component {
     return (
       <View style={styles.container}>
         <Image style={styles.image} resizeMode={'contain'} source={{ uri: book.image.default }} />
-        <RNEText h4 style={styles.commonMargin} >
+        <RNEText h4 style={[styles.commonMargin, { textAlign: 'center' }]} >
           { book.title }
         </RNEText>
         <Text>
           by { book.author }
         </Text>
-        <Text numberOfLines={3} style={styles.commonMargin}>
-          { book.description }
+        <Text numberOfLines={3} style={[styles.commonMargin, { textAlign: 'center' }]}>
+          { book.description.replace(/<[^>]+>/ig, '') }
         </Text>
         <Button
           title="Start"
           onPress={() => this.openBook(this.props)}
-          buttonStyle={styles.commonMargin}
+          buttonStyle={[styles.commonMargin, { borderRadius: 4, backgroundColor: 'red' }]}
         />
       </View>
     );
