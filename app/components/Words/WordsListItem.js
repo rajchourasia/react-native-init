@@ -72,6 +72,7 @@ class WordsListItem extends Component {
   render() {
     const { word, book, userId } = this.props;
     const collapsed = this.state.collapsed;
+    const iconName = collapsed ? 'chevron-right' : 'keyboard-arrow-down';
     if (!word) {
       return <View />;
     }
@@ -81,8 +82,10 @@ class WordsListItem extends Component {
           onPress={() => this.onPress(word, book, userId)}
           component={TouchableHighlight}
           title={word.name}
+          rightIcon={{ name: iconName }}
+          containerStyle={!collapsed && { backgroundColor: '#ddd' }}
         />
-        <Collapsible collapsed={collapsed}>
+        <Collapsible style={{ backgroundColor: '#efefef' }} collapsed={collapsed}>
           { this.getCollapsible(word) }
         </Collapsible>
       </View>

@@ -25,6 +25,12 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 0,
   },
+  searchBar: {
+    backgroundColor: '#eee',
+  },
+  inputStyle: {
+    backgroundColor: '#fff',
+  },
 });
 
 class BookReadScreen extends Component {
@@ -62,6 +68,7 @@ class BookReadScreen extends Component {
             onChangeText={(text) => this.search(text)}
             placeholder="Type a word"
             containerStyle={styles.searchBar}
+            inputStyle={styles.inputStyle}
             clearButtonMode="while-editing"
           />
         </View>

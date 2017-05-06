@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { StyleSheet, TouchableHighlight, View, Text } from 'react-native';
 import RNAudioStreamer from 'react-native-audio-streamer';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import pearsonConfig from '../../../config/pearson';
 
 const pearsonBasePath = pearsonConfig.basePath;
@@ -14,8 +15,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  audio: {
-    marginTop: 8,
+  pronunciation: {
+    flexDirection: 'row',
+  },
+  pronunciationText: {
+    marginRight: 16,
   },
   partOfSpeech: {
     fontSize: 12,
@@ -24,10 +28,12 @@ const styles = StyleSheet.create({
   },
   definition: {
     marginTop: 8,
+    paddingLeft: 16,
   },
   example: {
     marginTop: 8,
     color: 'grey',
+    paddingLeft: 16,
   },
 });
 
@@ -45,7 +51,7 @@ const WordMeaningCard = ({ word, style }) => {
       style={styles.audio}
       onPress={() => play(audioUrl)}
     >
-      <Text>Audio</Text>
+      <Icon name="volume-up" size={18} color="#444" />
     </TouchableHighlight>
   );
 
@@ -54,6 +60,10 @@ const WordMeaningCard = ({ word, style }) => {
                     && meaning.pronunciations[0].audio
                     && meaning.pronunciations[0].audio[0]
                     ? meaning.pronunciations[0].audio[0].url : null;
+    const pronunciationIpa = meaning.pronunciations && meaning.pronunciations[0]
+                    && meaning.pronunciations[0].audio
+                    && meaning.pronunciations[0].ipa
+                    ? meaning.pronunciations[0].ipa : null;
     const partOfSpeech = meaning.partOfSpeech ? meaning.partOfSpeech : null;
     const details = meaning.details && meaning.details[0] ? meaning.details[0] : null;
     const definition = details ? details.definition[0] : null;
@@ -63,7 +73,10 @@ const WordMeaningCard = ({ word, style }) => {
     return (
       <View style={[style, styles.container]} key={key}>
         <Text style={styles.name}>{name}</Text>
-        { audioUrl && getAudioHtml(audioUrl) }
+        <View style={styles.pronunciation}>
+          { pronunciationIpa && <Text style={styles.pronunciationText}>/{pronunciationIpa}/</Text> }
+          { audioUrl && getAudioHtml(audioUrl) }
+        </View>
         { partOfSpeech && <Text style={styles.partOfSpeech}>{ partOfSpeech }</Text> }
         { definition && <Text style={styles.definition}>{ definition }</Text> }
         { example && <Text style={styles.example}>"{ example }"</Text> }

@@ -32,6 +32,12 @@ const styles = StyleSheet.create({
     marginTop: 15,
     alignSelf: 'center',
   },
+  searchBar: {
+    backgroundColor: '#eee',
+  },
+  inputStyle: {
+    backgroundColor: '#fff',
+  },
 });
 
 class HomeScreen extends Component {
@@ -80,6 +86,7 @@ class HomeScreen extends Component {
             onChangeText={(text) => this.search(text)}
             placeholder="Which book?"
             containerStyle={styles.searchBar}
+            inputStyle={styles.inputStyle}
             clearButtonMode="while-editing"
           />
         </View>
