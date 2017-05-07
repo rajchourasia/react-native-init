@@ -10,10 +10,11 @@ const staticImage = require('../../../static/logo.png');
 
 const BookList = (props) => {
   const books = props.books ? props.books : null;
+  const userId = props.userId;
 
   function onPress(book) {
     // Set Reading.
-    props.appSetReadingStatus(book.grid);
+    props.appSetReadingStatus(book.grid, userId);
     props.selectReadingTab();
   }
   function getBookListView() {
@@ -48,6 +49,7 @@ const BookList = (props) => {
 
 BookList.propTypes = {
   books: PropTypes.object,
+  userId: PropTypes.string,
   onRowClickReduxAction: PropTypes.func,
   appSetReadingStatus: PropTypes.func,
 };

@@ -10,12 +10,14 @@ const HomeSearch = (props) =>
     books={props.books}
     navigator={props.navigator}
     selectReadingTab={props.selectReadingTab}
+    userId={props.userId}
   />;
 
 HomeSearch.propTypes = {
   books: PropTypes.object,
   navigator: PropTypes.object,
   selectReadingTab: PropTypes.func,
+  userId: PropTypes.string,
 };
 
 const recordSelector = entitiesSelector();

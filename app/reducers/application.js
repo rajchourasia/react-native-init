@@ -33,10 +33,7 @@ export const application = createReducer({
   },
   [types.SET_READING_STATUS](state, action) {
     return Object.assign({}, state, {
-      reading: {
-        status: action.status,
-        bookGrid: action.bookGrid,
-      },
+      reading: action.reading,
     });
   },
 });

@@ -4,6 +4,7 @@ import GoodreadsApi from '../lib/goodreadsApi';
 import { FirebaseAuthentication } from '../lib/firebaseApi';
 import { modelUser } from '../utils/goodreadsDataModel';
 import { getBooksFromAllShelves } from './shelves';
+import { getApplicationReading } from './application';
 
 export function getUserDetails(uid) {
   return (dispatch) => {
@@ -37,6 +38,7 @@ export function getAuthenticatedUser() {
         const user = modelUser(userObject);
         user.id = userFirebaseObject.uid;
         user.email = userFirebaseObject.email;
+        dispatch(getApplicationReading(user.id));
         dispatch(getUserDetails(user.grid));
         if (grKey) {
           // Store in AsyncStorage

@@ -48,6 +48,27 @@ class HomeScreen extends Component {
       searchActive: false,
     };
   }
+  getBodyComponent() {
+    const searchActive = this.state.searchActive;
+    if (searchActive) {
+      return (
+        <HomeSearch
+          metaPropName="homeSearchList"
+          navigator={this.props.navigator}
+          selectReadingTab={this.props.selectReadingTab}
+          userId={this.props.userId}
+        />
+      );
+    }
+    return (
+      <BookList
+        books={this.props.books}
+        navigator={this.props.navigator}
+        selectReadingTab={this.props.selectReadingTab}
+        userId={this.props.userId}
+      />
+    );
+  }
   search(text) {
     if (text && !this.state.searchActive) {
       this.setState({ searchActive: true });
@@ -57,25 +78,6 @@ class HomeScreen extends Component {
     if (typeof text === 'string') {
       this.props.searchBooks(text);
     }
-  }
-  getBodyComponent() {
-    const searchActive = this.state.searchActive;
-    if (searchActive) {
-      return (
-        <HomeSearch
-          metaPropName="homeSearchList"
-          navigator={this.props.navigator}
-          selectReadingTab={this.props.selectReadingTab}
-        />
-      );
-    }
-    return (
-      <BookList
-        books={this.props.books}
-        navigator={this.props.navigator}
-        selectReadingTab={this.props.selectReadingTab}
-      />
-    );
   }
   render() {
     return (
