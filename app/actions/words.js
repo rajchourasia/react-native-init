@@ -7,6 +7,7 @@ import { modelWord } from '../utils/pearsonDataModel.js';
 
 export const searchWords = (text) =>
   (dispatch) =>
+  new Promise((resolve, reject) => {
     FirebaseSearch.search(text)
       .then(resp => {
         // console.log(resp);
@@ -25,15 +26,17 @@ export const searchWords = (text) =>
           const meta = {
             wordSearchList: wordIds,
           };
-          return dispatch({
+          dispatch({
             type: types.WORD_SEARCH_UPDATE,
             entities: wordList,
             meta,
           });
+          resolve(true);
         }
-        return null;
+        resolve(false);
       })
-      .catch(err => console.log(err));
+      .catch(err => reject(err));
+  });
 
 export const getWordDetails = (word) =>
     (dispatch) => {
@@ -93,30 +96,33 @@ export const getWordListByBookId = (bookId, userId) =>
     (dispatch) => {
       const filterValue = `${userId}_${bookId}`;
       const path = 'relations/wordView';
-      // Check if books exixtes in Firebase.
-      FirebaseDatabase.getByFieldValue(path, 'userId_bookId', filterValue).then((values) => {
-        if (values) {
-          const wordList = {};
-          const sortedKeys = Object.keys(values).sort((a, b) =>
-            values[b].timestamp - values[a].timestamp);
-          const uniqueKeys = uniqBy(sortedKeys, (e) => values[e].wordId);
-          const wordIds = uniqueKeys.map((value) => {
-            const wordId = values[value].wordId;
-            const name = values[value].name;
-            wordList[wordId] = {
-              name,
-              id: wordId,
-            };
-            return wordId;
-          });
-          const metaPropName = `book/${bookId}/wordList`;
-          return dispatch({
-            type: types.WORD_META_SET,
-            entities: wordList,
-            wordIds,
-            metaPropName,
-          });
-        }
-        return null;
+      return new Promise((resolve, reject) => {
+        // Check if books exixtes in Firebase.
+        FirebaseDatabase.getByFieldValue(path, 'userId_bookId', filterValue).then((values) => {
+          if (values) {
+            const wordList = {};
+            const sortedKeys = Object.keys(values).sort((a, b) =>
+              values[b].timestamp - values[a].timestamp);
+            const uniqueKeys = uniqBy(sortedKeys, (e) => values[e].wordId);
+            const wordIds = uniqueKeys.map((value) => {
+              const wordId = values[value].wordId;
+              const name = values[value].name;
+              wordList[wordId] = {
+                name,
+                id: wordId,
+              };
+              return wordId;
+            });
+            const metaPropName = `book/${bookId}/wordList`;
+            dispatch({
+              type: types.WORD_META_SET,
+              entities: wordList,
+              wordIds,
+              metaPropName,
+            });
+            resolve(true);
+          }
+          resolve(false);
+        }).catch(err => reject(err));
       });
     };

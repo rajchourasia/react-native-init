@@ -5,7 +5,6 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Text,
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { ActionCreators } from '../../actions';

@@ -6,6 +6,9 @@ import {
   View,
   StyleSheet,
   ScrollView,
+  ActivityIndicator,
+  Text,
+  TouchableHighlight,
 } from 'react-native';
 import { ActionCreators } from '../../actions';
 import WordsList from '../../components/Words/WordsList';
@@ -13,6 +16,17 @@ import WordSearch from '../Search/WordSearch';
 import entitiesSelector from '../../selectors/entitiesSelector';
 
 const styles = StyleSheet.create({
+  centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
+  notFound: {
+    height: 80,
+  },
+  notFoundText: {
+    fontStyle: 'italic',
+  },
   container: {
     flex: 1,
   },
@@ -38,66 +52,86 @@ class BookReadScreen extends Component {
     super(props);
 
     this.state = {
-      searchActive: false,
+      fetchList: props.words ? true : null,
     };
+    this.searchFocus = this.searchFocus.bind(this);
   }
   componentWillMount() {
     const { words, book, userId } = this.props;
     if (!words && book) {
-      this.props.getWordListByBookId(book.id, userId);
+      this.props.getWordListByBookId(book.id, userId).then((value) => {
+        this.setState({
+          fetchList: value,
+        });
+      });
     }
   }
-  search(text) {
-    if (text && !this.state.searchActive) {
-      this.setState({ searchActive: true });
-    } else if (!text && this.state.searchActive) {
-      this.setState({ searchActive: false });
+  getBodyComponent() {
+    if (this.state.fetchList === null) {
+      return (
+        <ActivityIndicator
+          style={[styles.centering, { flex: 1 }]}
+          size="small"
+          color="grey"
+        />
+      );
+    } else if (this.state.fetchList === false) {
+      return (
+        <View style={[styles.centering, styles.notFound]}>
+          <Text style={styles.notFoundText}>Search and Add words</Text>
+        </View>
+      );
     }
-    if (text && typeof text === 'string') {
-      this.props.searchWords(text);
-    } else {
-      this.props.clearSearchWords();
-    }
+    return (
+      <ScrollView
+        style={{ flex: 1, marginBottom: 50 }}
+        contentInset={{ top: 0 }}
+        automaticallyAdjustContentInsets={false}
+      >
+        <View style={styles.wordListContainer}>
+          <WordsList
+            words={this.props.words}
+            getWordDetails={this.props.getWordDetails}
+            setWordView={this.props.setWordView}
+            userId={this.props.userId}
+            book={this.props.book}
+          />
+        </View>
+      </ScrollView>
+    );
+  }
+  searchFocus() {
+    this.props.navigator.push({
+      title: this.props.book.title,
+      component: WordSearch,
+      passProps: {
+        metaPropName: 'wordSearchList',
+        getWordDetails: this.props.getWordDetails,
+        setWordView: this.props.setWordView,
+        userId: this.props.userId,
+        book: this.props.book,
+      },
+    });
   }
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.searchBarContainer}>
-          <SearchBar
-            lightTheme
-            onChangeText={(text) => this.search(text)}
-            placeholder="Type a word"
-            containerStyle={styles.searchBar}
-            inputStyle={styles.inputStyle}
-            clearButtonMode="while-editing"
-          />
+          <TouchableHighlight onPress={() => this.searchFocus()} >
+            <View>
+              <SearchBar
+                lightTheme
+                placeholder="Type a word"
+                containerStyle={styles.searchBar}
+                inputStyle={styles.inputStyle}
+                clearButtonMode="while-editing"
+                autoCapitalize="none"
+                editable={false}
+              />
+            </View>
+          </TouchableHighlight>
         </View>
-        <ScrollView
-          style={{ flex: 1, marginBottom: 50 }}
-          contentInset={{ top: 0 }}
-          automaticallyAdjustContentInsets={false}
-        >
-        { this.state.searchActive &&
-          <View style={{ flex: 1 }}>
-            <WordSearch
-              metaPropName="wordSearchList"
-              getWordDetails={this.props.getWordDetails}
-              setWordView={this.props.setWordView}
-              userId={this.props.userId}
-              book={this.props.book}
-            />
-          </View>
-          }
-          <View style={styles.wordListContainer}>
-            <WordsList
-              words={this.props.words}
-              getWordDetails={this.props.getWordDetails}
-              setWordView={this.props.setWordView}
-              userId={this.props.userId}
-              book={this.props.book}
-            />
-          </View>
-        </ScrollView>
+        { this.getBodyComponent() }
       </View>
     );
   }
@@ -108,10 +142,8 @@ BookReadScreen.propTypes = {
   book: PropTypes.object,
   words: PropTypes.object,
   navigator: PropTypes.object,
-  searchWords: PropTypes.func,
   getWordDetails: PropTypes.func,
   setWordView: PropTypes.func,
-  clearSearchWords: PropTypes.func,
   getWordListByBookId: PropTypes.func,
 };
 
