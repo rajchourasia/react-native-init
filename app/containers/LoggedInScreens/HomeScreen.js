@@ -7,6 +7,7 @@ import {
   View,
   ScrollView,
   ActivityIndicator,
+  Text,
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { ActionCreators } from '../../actions';
@@ -15,13 +16,19 @@ import BookList from '../../components/Books/BookList';
 import shelvesBooksSelector from '../../selectors/shelvesBooksSelector';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   centering: {
     alignItems: 'center',
     justifyContent: 'center',
     padding: 8,
+  },
+  notFound: {
+    height: 80,
+  },
+  notFoundText: {
+    fontStyle: 'italic',
+  },
+  container: {
+    flex: 1,
   },
   searchBarContainer: {
     paddingTop: 65,
@@ -53,13 +60,19 @@ class HomeScreen extends Component {
     this.searchFocus = this.searchFocus.bind(this);
   }
   getBodyComponent() {
-    if (!this.props.books || (this.props.books && Object.keys(this.props.books).length <= 0)) {
+    if (!this.props.books) {
       return (
         <ActivityIndicator
           style={[styles.centering, { height: 80 }]}
           size="small"
           color="grey"
         />
+      );
+    } else if (this.props.books && Object.keys(this.props.books).length <= 0) {
+      return (
+        <View style={[styles.centering, styles.notFound]}>
+          <Text style={styles.notFoundText}>Search for books</Text>
+        </View>
       );
     }
     return (

@@ -23,15 +23,17 @@ const BookList = (props) => {
       listView = (
         <List containerStyle={{ marginTop: 0 }}>
           {
-            Object.keys(books).sort((a, b) => books[a].weight - books[b].weight).map((bookKey, index) => (
-              <ListItem
-                onPress={() => onPress(books[bookKey])}
-                component={TouchableHighlight}
-                key={books[bookKey].grid}
-                avatar={!isEmpty(books[bookKey].image)
-                  ? { uri: books[bookKey].image.default } : staticImage}
-                title={books[bookKey].title}
-              />
+            Object.keys(books).sort((a, b) =>
+              books[a].weight - books[b].weight).map((bookKey, index) => (
+                <ListItem
+                  onPress={() => onPress(books[bookKey])}
+                  component={TouchableHighlight}
+                  key={books[bookKey].grid}
+                  avatar={!isEmpty(books[bookKey].image)
+                    ? { uri: books[bookKey].image.default } : staticImage}
+                  title={books[bookKey].title}
+                  subtitle={books[bookKey].author}
+                />
             ))
           }
         </List>
