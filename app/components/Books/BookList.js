@@ -23,7 +23,7 @@ const BookList = (props) => {
       listView = (
         <List containerStyle={{ marginTop: 0 }}>
           {
-            Object.keys(books).map((bookKey, index) => (
+            Object.keys(books).sort((a, b) => books[a].weight - books[b].weight).map((bookKey, index) => (
               <ListItem
                 onPress={() => onPress(books[bookKey])}
                 component={TouchableHighlight}

@@ -5,36 +5,42 @@ import { FirebaseDatabase } from '../lib/firebaseApi';
 import { modelBook } from '../utils/goodreadsDataModel.js';
 
 export const searchBooks = (string) =>
-  (dispatch) => {
-    const url = `http://www.goodreads.com/search/index.xml?q=${encodeURIComponent(string)}`;
-    return GoodreadsApi.get(url)
-      .then(resp => {
-        // console.log(resp);
-        const searchResultObject = resp.data.GoodreadsResponse.search;
-        const searchResultObjectBooks = searchResultObject.results.work;
-        const books = {};
-        const meta = {
-          homeSearchList: [],
-        };
-        const fields = {
-          author: 'author.name',
-        };
-        if (searchResultObjectBooks && searchResultObjectBooks.length > 0) {
-          searchResultObjectBooks.map((bookObject) => {
-            const book = bookObject.best_book;
-            books[book.id.text] = modelBook(book, fields);
-            meta.homeSearchList.push(book.id.text);
-            return null;
+  (dispatch) =>
+    new Promise((resolve, reject) => {
+      const url = `http://www.goodreads.com/search/index.xml?q=${encodeURIComponent(string)}`;
+      GoodreadsApi.get(url)
+        .then(resp => {
+          // console.log(resp);
+          const searchResultObject = resp.data.GoodreadsResponse.search;
+          const searchResultObjectBooks = searchResultObject.results.work;
+          const books = {};
+          const meta = {
+            homeSearchList: [],
+          };
+          const fields = {
+            author: 'author.name',
+          };
+          if (searchResultObjectBooks && searchResultObjectBooks.length > 0) {
+            searchResultObjectBooks.map((bookObject) => {
+              const book = bookObject.best_book;
+              books[book.id.text] = modelBook(book, fields);
+              meta.homeSearchList.push(book.id.text);
+              return null;
+            });
+          }
+          dispatch({
+            type: types.BOOK_SEARCH_UPDATE,
+            entities: books,
+            meta,
           });
-        }
-        return dispatch({
-          type: types.BOOK_SEARCH_UPDATE,
-          entities: books,
-          meta,
-        });
-      })
-      .catch(err => console.log(err));
-  };
+          if (searchResultObjectBooks && searchResultObjectBooks.length > 0) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        })
+        .catch(err => reject(err));
+    });
 
 export const getBookDetails = (bookId) =>
     (dispatch) =>
@@ -74,3 +80,8 @@ export const getBookDetails = (bookId) =>
         });
       })
       .catch(err => console.log(err));
+
+export const clearSearchBooks = () =>
+        (dispatch) => dispatch({
+          type: types.BOOK_SEARCH_CLEAR,
+        });

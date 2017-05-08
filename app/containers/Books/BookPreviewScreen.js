@@ -61,9 +61,12 @@ class BookPreviewScreen extends Component {
         <Text>
           by { book.author }
         </Text>
-        <Text numberOfLines={3} style={[styles.commonMargin, { textAlign: 'center' }]}>
-          { book.description.replace(/<[^>]+>/ig, '') }
-        </Text>
+        {
+          book.description &&
+            <Text numberOfLines={3} style={[styles.commonMargin, { textAlign: 'center' }]}>
+              { book.description.replace(/<[^>]+>/ig, '') }
+            </Text>
+        }
         <Button
           title="Start"
           onPress={() => this.openBook(this.props)}

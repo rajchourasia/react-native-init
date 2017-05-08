@@ -2,12 +2,27 @@ import { createSelectorCreator, defaultMemoize } from 'reselect';
 import isEqual from 'lodash/isEqual';
 import pickBy from 'lodash/pickBy';
 
-const getRecordIds = (state, props) => state[props.type]
-&& state[props.type].meta[props.metaPropName];
+const getRecordIds = (state, props) => {
+  let items = [];
+  let shelfBooks = {};
+  const shelves = state.user && state.user.shelves ? state.user.shelves : null;
+  if (shelves && shelves.length > 0) {
+    shelves.map((shelf) => {
+      if (state.shelves && state.shelves[shelf]) {
+        shelfBooks = Object.assign({}, shelfBooks, state.shelves[shelf]);
+      }
+      return null;
+    });
+    items = Object.keys(shelfBooks).sort((a, b) =>
+      (new Date(shelfBooks[b].dateUpdated).getTime() / 1000)
+      - (new Date(shelfBooks[a].dateUpdated).getTime() / 1000));
+  }
+  return items;
+};
 const getEntities = (state, props) => state[props.type] && state[props.type].entities
 && pickBy(state[props.type].entities, (entity) => {
   // Filter only those entities whose records are there in recordIds.
-  const records = state[props.type] && state[props.type].meta[props.metaPropName];
+  const records = getRecordIds(state, props);
   if (records) {
     return records.find((record) =>
       (entity.grid && (record === entity.grid)) || (entity.id && (record === entity.id))
@@ -22,7 +37,7 @@ const createDeepEqualSelector = createSelectorCreator(
   isEqual
 );
 
-const entitiesSelector = () => createDeepEqualSelector(
+const shelvesBooksSelector = () => createDeepEqualSelector(
     [getEntities, getRecordIds], (records, recordIds) => {
       if (records && recordIds) {
         const entityData = {};
@@ -40,4 +55,4 @@ const entitiesSelector = () => createDeepEqualSelector(
     }
   );
 
-export default entitiesSelector;
+export default shelvesBooksSelector;

@@ -2,19 +2,26 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
+  TouchableHighlight,
   StyleSheet,
   View,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { ActionCreators } from '../../actions';
 import HomeSearch from '../Search/HomeSearch';
 import BookList from '../../components/Books/BookList';
-import entitiesSelector from '../../selectors/entitiesSelector';
+import shelvesBooksSelector from '../../selectors/shelvesBooksSelector';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
   },
   searchBarContainer: {
     paddingTop: 65,
@@ -43,19 +50,15 @@ class HomeScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      searchActive: false,
-    };
+    this.searchFocus = this.searchFocus.bind(this);
   }
   getBodyComponent() {
-    const searchActive = this.state.searchActive;
-    if (searchActive) {
+    if (!this.props.books || (this.props.books && Object.keys(this.props.books).length <= 0)) {
       return (
-        <HomeSearch
-          metaPropName="homeSearchList"
-          navigator={this.props.navigator}
-          selectReadingTab={this.props.selectReadingTab}
-          userId={this.props.userId}
+        <ActivityIndicator
+          style={[styles.centering, { height: 80 }]}
+          size="small"
+          color="grey"
         />
       );
     }
@@ -68,28 +71,34 @@ class HomeScreen extends Component {
       />
     );
   }
-  search(text) {
-    if (text && !this.state.searchActive) {
-      this.setState({ searchActive: true });
-    } else if (!text && this.state.searchActive) {
-      this.setState({ searchActive: false });
-    }
-    if (typeof text === 'string') {
-      this.props.searchBooks(text);
-    }
+  searchFocus() {
+    this.props.navigator.push({
+      title: 'Books',
+      component: HomeSearch,
+      passProps: {
+        metaPropName: 'homeSearchList',
+        navigator: this.props.navigator,
+        selectReadingTab: this.props.selectReadingTab,
+        userId: this.props.userId,
+      },
+    });
   }
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.searchBarContainer}>
-          <SearchBar
-            lightTheme
-            onChangeText={(text) => this.search(text)}
-            placeholder="Which book?"
-            containerStyle={styles.searchBar}
-            inputStyle={styles.inputStyle}
-            clearButtonMode="while-editing"
-          />
+          <TouchableHighlight onPress={() => this.searchFocus()} >
+            <View>
+              <SearchBar
+                lightTheme
+                placeholder="Which Book?"
+                containerStyle={styles.searchBar}
+                inputStyle={styles.inputStyle}
+                clearButtonMode="while-editing"
+                editable={false}
+              />
+            </View>
+          </TouchableHighlight>
         </View>
         <ScrollView
           style={{ flex: 1, marginBottom: 50 }}
@@ -117,10 +126,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(ActionCreators, dispatch);
 }
 
-const recordSelector = entitiesSelector();
+const recordSelector = shelvesBooksSelector();
 function mapStateToProps(state) {
   const selectorProps = {
-    metaPropName: 'homeList',
     type: 'books',
   };
   return {
