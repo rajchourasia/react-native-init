@@ -15,16 +15,20 @@ const WordsList = (props) => {
       listView = (
         <List containerStyle={{ marginTop: 0 }}>
           {
-            Object.keys(words).map((wordKey) => (
-              <WordsListItem
-                key={wordKey}
-                word={words[wordKey]}
-                getWordDetails={props.getWordDetails}
-                setWordView={props.setWordView}
-                book={props.book}
-                userId={props.userId}
-              />
-            ))
+            Object.keys(words).map((wordKey) => {
+              const word = words[wordKey];
+              const key = word.id ? word.id : wordKey;
+              return (
+                <WordsListItem
+                  key={key}
+                  word={word}
+                  getWordDetails={props.getWordDetails}
+                  setWordView={props.setWordView}
+                  book={props.book}
+                  userId={props.userId}
+                />
+              );
+            })
           }
         </List>
       );

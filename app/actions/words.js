@@ -1,5 +1,6 @@
 import uniqBy from 'lodash/uniqBy';
 import * as types from './types';
+import { firebaseDB } from '../lib/firebaseApi/firebaseInit';
 import FirebaseSearch from '../lib/firebaseApi/FirebaseSearch';
 import PearsonApi from '../lib/pearsonApi';
 import { FirebaseDatabase } from '../lib/firebaseApi';
@@ -92,7 +93,7 @@ export const setWordView = (word, book, userId) =>
     });
   };
 
-export const getWordListByBookId = (bookId, userId) =>
+export const getUserWordListByBookId = (bookId, userId) =>
     (dispatch) => {
       const filterValue = `${userId}_${bookId}`;
       const path = 'relations/wordView';
@@ -126,3 +127,56 @@ export const getWordListByBookId = (bookId, userId) =>
         }).catch(err => reject(err));
       });
     };
+
+export const getDefaultWordListByBookId = (bookId, chapters) =>
+      (dispatch) =>
+        new Promise((resolve, reject) => {
+          const promiseArray = Object.keys(chapters).map((val) => {
+            const chap = val;
+            const wordsPath = `booksWordsTree/${bookId}/${val}`;
+            const pro = firebaseDB.child(wordsPath)
+            .orderByChild('count').endAt(1000).once('value', (wordsSnapshot) => {
+              if (wordsSnapshot.val()) {
+                const values = wordsSnapshot.val();
+                const wordList = {};
+                const wordIdsChap = [];
+                Object.keys(values).map((value) => {
+                  const id = values[value].id;
+                  if (id) {
+                    const name = values[value].name;
+                    const posTag = values[value].partOfSpeech.tag;
+                    wordList[id] = {
+                      name,
+                      id,
+                    };
+                    wordIdsChap.push({
+                      id,
+                      partOfSpeech: {
+                        tag: posTag,
+                      },
+                    });
+                  }
+                  return null;
+                });
+                const wordIds = {};
+                wordIds[chap] = wordIdsChap;
+                const metaPropName = `book/${bookId}/defaultWordList`;
+                dispatch({
+                  type: types.WORD_META_MERGE,
+                  entities: wordList,
+                  wordIds,
+                  metaPropName,
+                });
+              }
+            });
+            return pro;
+          });
+          Promise.all(promiseArray).then((values) => {
+            if (values) {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          })
+          .catch(err => reject(err));
+        });

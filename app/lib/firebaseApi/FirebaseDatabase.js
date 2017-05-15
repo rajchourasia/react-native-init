@@ -29,7 +29,7 @@ class FirebaseDatabase {
     if (path && value) {
       const updates = {
         [path]: value,
-      }
+      };
       return firebaseDB.update(updates);
     }
     return null;

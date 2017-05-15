@@ -67,11 +67,14 @@ class BookPreviewScreen extends Component {
               { book.description.replace(/<[^>]+>/ig, '') }
             </Text>
         }
-        <Button
-          title="Start"
-          onPress={() => this.openBook(this.props)}
-          buttonStyle={[styles.commonMargin, { borderRadius: 4, backgroundColor: 'red' }]}
-        />
+        {
+          book.id &&
+            <Button
+              title="Start"
+              onPress={() => this.openBook(this.props)}
+              buttonStyle={[styles.commonMargin, { borderRadius: 4, backgroundColor: 'red' }]}
+            />
+        }
       </View>
     );
   }
@@ -85,9 +88,9 @@ BookPreviewScreen.propTypes = {
 
 function mapStateToProps(state, props) {
   const bookGrid = props.bookGrid;
-  const book = state.books.entities[bookGrid];
   return {
-    book,
+    book: state.books.entities[bookGrid],
+    bookId: state.books.entities[bookGrid].id,
   };
 }
 

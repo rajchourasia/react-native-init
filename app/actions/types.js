@@ -17,3 +17,4 @@ export const WORD_SEARCH_CLEAR = 'WORD_SEARCH_CLEAR';
 export const WORD_UPDATE = 'WORD_UPDATE';
 export const WORD_META_SET = 'WORD_META_SET';
 export const WORD_META_PREPEND = 'WORD_META_PREPEND';
+export const WORD_META_MERGE = 'WORD_META_MERGE';

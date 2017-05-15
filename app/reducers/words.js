@@ -39,6 +39,19 @@ const wordMetaSet = (state, action) => {
   return newState;
 };
 
+const wordMetaMerge = (state, action) => {
+  const newState = Object.assign({}, state);
+  newState.entities = Object.assign({}, newState.entities, action.entities);
+  if (typeof newState.meta[action.metaPropName] !== 'undefined') {
+    newState.meta[action.metaPropName]
+    = Object.assign({}, newState.meta[action.metaPropName], action.wordIds);
+  } else {
+    newState.meta[action.metaPropName]
+    = action.wordIds;
+  }
+  return newState;
+};
+
 const wordMetaPrepend = (state, action) => {
   const newState = Object.assign({}, state);
   const wordId = action.wordId;
@@ -66,6 +79,9 @@ export const words = createReducer(defaultState, {
   },
   [types.WORD_META_SET](state, action) {
     return wordMetaSet(state, action);
+  },
+  [types.WORD_META_MERGE](state, action) {
+    return wordMetaMerge(state, action);
   },
   [types.WORD_META_PREPEND](state, action) {
     return wordMetaPrepend(state, action);

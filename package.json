@@ -15,6 +15,7 @@
     "react-native-collapsible": "^0.8.0",
     "react-native-elements": "https://github.com/rajchourasia/react-native-elements/tarball/customIconButton",
     "react-native-oauth": "https://github.com/rajchourasia/react-native-oauth/tarball/xmldata",
+    "react-native-side-menu": "^0.20.1",
     "react-native-splash-screen": "^2.0.0",
     "react-native-vector-icons": "^4.0.0",
     "react-redux": "^5.0.3",
