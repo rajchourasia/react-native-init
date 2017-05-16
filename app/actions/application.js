@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import * as types from './types';
+import { getBookDetails } from './books';
 
 export const homeSearchToggle = (status) =>
   (dispatch) =>
@@ -29,6 +30,7 @@ export const getApplicationReading = (userId) =>
   AsyncStorage.getItem(`@Application:${userId}:reading`).then((readingStr) => {
     if (readingStr) {
       const reading = JSON.parse(readingStr);
+      dispatch(getBookDetails(reading.bookGrid))
       return dispatch({
         type: types.SET_READING_STATUS,
         reading,

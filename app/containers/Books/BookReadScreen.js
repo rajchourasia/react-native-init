@@ -17,7 +17,7 @@ import { ActionCreators } from '../../actions';
 import WordsList from '../../components/Words/WordsList';
 import WordSearch from '../Search/WordSearch';
 import entitiesSelector from '../../selectors/entitiesSelector';
-import bookDefaultWordsSelector from '../../selectors/bookDefaultWordsSelector';
+import ChapterWordList from './ChapterWordsList';
 
 const window = Dimensions.get('window');
 
@@ -57,33 +57,19 @@ class BookReadScreen extends Component {
   constructor(props) {
     super(props);
 
-    let fetchDefaultList = null;
     let chapter = 0;
     if (props.book && props.book.chapters) {
-      fetchDefaultList = true;
       chapter = Object.keys(props.book.chapters)[0];
-    } else {
-      fetchDefaultList = false;
     }
     this.state = {
       selectedIndex: 0,
       fetchList: props.words ? true : null,
-      fetchDefaultList,
       chapter,
     };
     this.searchFocus = this.searchFocus.bind(this);
   }
   componentWillMount() {
-    const { words, defaultWords, book, userId } = this.props;
-    if (!defaultWords && book && book.chapters) {
-      this.props.getDefaultWordListByBookId(book.id, book.chapters).then((value) => {
-        if (this.state.fetchDefaultList !== value) {
-          this.setState({
-            fetchDefaultList: value,
-          });
-        }
-      });
-    }
+    const { words, book, userId } = this.props;
     if (!words && book) {
       this.props.getUserWordListByBookId(book.id, userId).then((value) => {
         this.setState({
@@ -92,17 +78,11 @@ class BookReadScreen extends Component {
       });
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.defaultWords && nextProps.defaultWords) {
-      this.setState({
-        fetchDefaultList: true,
-      });
-    }
-  }
   getChaptersMenu(thisC, chapters) {
+    const chapter = this.state.chapter ? this.state.chapter : Object.keys(chapters)[0];
     return (
       <ScrollView
-        style={{ flex: 1 }}
+        style={{ flex: 1, marginBottom: 190 }}
         contentInset={{ top: 0 }}
         automaticallyAdjustContentInsets={false}
       >
@@ -118,7 +98,7 @@ class BookReadScreen extends Component {
                     title={`${key}. ${title}`}
                     rightIcon={{ name: 'chevron-right' }}
                     containerStyle={[{ paddingTop: 5, paddingBottom: 5, backgroundColor: '#eee' },
-                      (this.state.chapter === key) && { backgroundColor: '#ddd' }]}
+                      (chapter === key) && { backgroundColor: '#ddd' }]}
                   />
                 </View>
               );
@@ -132,14 +112,13 @@ class BookReadScreen extends Component {
   getDefaultWordListComponent(thisC) {
     const props = thisC.props;
     const state = thisC.state;
-    const { book, defaultWords } = props;
+    const { book } = props;
     const chapters = book.chapters;
     const currentChapter = state.chapter;
 
     const menu = thisC.getChaptersMenu(thisC, chapters);
-    const words = defaultWords && defaultWords[currentChapter];
 
-    if (chapters && words) {
+    if (chapters) {
       return (
         <View style={{ flex: 1, minHeight: window.height }}>
           <SideMenu
@@ -148,19 +127,20 @@ class BookReadScreen extends Component {
             isOpen
           >
             <ScrollView
-              style={{ flex: 1 }}
+              style={{ flex: 1, marginBottom: 190 }}
               contentInset={{ top: 0 }}
               automaticallyAdjustContentInsets={false}
             >
               <View style={{ backgroundColor: '#fff', minHeight: window.height }}>
-                <WordsList
-                  words={words}
+                <ChapterWordList
                   getWordDetails={props.getWordDetails}
                   setWordView={props.setWordView}
                   userId={props.userId}
                   book={book}
+                  chapter={currentChapter}
+                  key={currentChapter}
                 />
-            </View>
+              </View>
             </ScrollView>
           </SideMenu>
         </View>
@@ -194,7 +174,7 @@ class BookReadScreen extends Component {
     });
   }
   wrapWordList({ stateFlag, wordListComponentFunction, emptyText }) {
-    if (stateFlag === null) {
+    if (stateFlag && stateFlag === null) {
       return (
         <ActivityIndicator
           style={[styles.centering, { flex: 1 }]}
@@ -202,7 +182,7 @@ class BookReadScreen extends Component {
           color="grey"
         />
       );
-    } else if (stateFlag === false) {
+    } else if (stateFlag && stateFlag === false) {
       return (
         <View style={[styles.centering, styles.notFound]}>
           <Text style={styles.notFoundText}>{emptyText}</Text>
@@ -210,7 +190,7 @@ class BookReadScreen extends Component {
       );
     }
     return (
-      <View style={{flex:1}}>
+      <View style={{ flex: 1 }}>
         {wordListComponentFunction(this)}
       </View>
     );
@@ -262,7 +242,6 @@ class BookReadScreen extends Component {
               emptyText: 'Search words above!',
             })
             : this.wrapWordList({
-              stateFlag: this.state.fetchDefaultList,
               wordListComponentFunction: this.getDefaultWordListComponent,
               emptyText: 'Default List is Empty :(',
             })
@@ -281,29 +260,20 @@ BookReadScreen.propTypes = {
   getWordDetails: PropTypes.func,
   setWordView: PropTypes.func,
   getUserWordListByBookId: PropTypes.func,
-  getDefaultWordListByBookId: PropTypes.func,
-  defaultWords: PropTypes.object,
 };
 
 const recordsSelector = entitiesSelector();
-const bookDefaultWordsRecordsSelector = bookDefaultWordsSelector();
 
 function mapStateToProps(state, props) {
   const book = props.book;
   const metaPropName = `book/${book.id}/wordList`;
-  const defaultSelectorPropName = `book/${book.id}/defaultWordList`;
   const selectorProps = {
     metaPropName,
-    type: 'words',
-  };
-  const defaultSelectorProps = {
-    metaPropName: defaultSelectorPropName,
     type: 'words',
   };
   return {
     userId: state.user.id,
     words: recordsSelector(state, selectorProps),
-    defaultWords: bookDefaultWordsRecordsSelector(state, defaultSelectorProps),
   };
 }
 

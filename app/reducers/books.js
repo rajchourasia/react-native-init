@@ -2,7 +2,7 @@ import createReducer from '../lib/createReducer';
 import * as types from '../actions/types';
 
 const booksDefaultState = {
-  entities: null,
+  entities: {},
   meta: {
     homeSearchList: null,
   },
@@ -30,6 +30,9 @@ const searchUpdate = (state, action) => {
 const bookUpdate = (state, action) => {
   const newState = Object.assign({}, state);
   const book = action.book;
+  if (!newState.entities[book.grid]) {
+    newState.entities[book.grid] = {};
+  }
   newState.entities[book.grid] = Object.assign(newState.entities[book.grid], book);
   return newState;
 };

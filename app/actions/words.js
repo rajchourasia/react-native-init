@@ -128,53 +128,44 @@ export const getUserWordListByBookId = (bookId, userId) =>
       });
     };
 
-export const getDefaultWordListByBookId = (bookId, chapters) =>
+export const getDefaultWordList = (bookId, chapter) =>
       (dispatch) =>
         new Promise((resolve, reject) => {
-          const promiseArray = Object.keys(chapters).map((val) => {
-            const chap = val;
-            const wordsPath = `booksWordsTree/${bookId}/${val}`;
-            const pro = firebaseDB.child(wordsPath)
-            .orderByChild('count').endAt(1000).once('value', (wordsSnapshot) => {
-              if (wordsSnapshot.val()) {
-                const values = wordsSnapshot.val();
-                const wordList = {};
-                const wordIdsChap = [];
-                Object.keys(values).map((value) => {
-                  const id = values[value].id;
-                  if (id) {
-                    const name = values[value].name;
-                    const posTag = values[value].partOfSpeech.tag;
-                    wordList[id] = {
-                      name,
-                      id,
-                    };
-                    wordIdsChap.push({
-                      id,
-                      partOfSpeech: {
-                        tag: posTag,
-                      },
-                    });
-                  }
-                  return null;
-                });
-                const wordIds = {};
-                wordIds[chap] = wordIdsChap;
-                const metaPropName = `book/${bookId}/defaultWordList`;
-                dispatch({
-                  type: types.WORD_META_MERGE,
-                  entities: wordList,
-                  wordIds,
-                  metaPropName,
-                });
+          const wordsPath = `booksWordsTree/${bookId}/${chapter}`;
+          firebaseDB.child(wordsPath)
+          .orderByChild('count').endAt(1000).once('value', (wordsSnapshot) => {
+            if (wordsSnapshot.val()) {
+              const values = wordsSnapshot.val();
+              const wordList = {};
+              const wordIds = [];
+              Object.keys(values).map((value) => {
+                const id = values[value].id;
+                if (id) {
+                  const name = values[value].name;
+                  const posTag = values[value].partOfSpeech.tag;
+                  wordList[id] = {
+                    name,
+                    id,
+                  };
+                  wordIds.push({
+                    id,
+                    partOfSpeech: {
+                      tag: posTag,
+                    },
+                  });
+                }
+                return null;
+              });
+              const metaPropName = `book/${bookId}/defaultWordList/${chapter}`;
+              dispatch({
+                type: types.WORD_META_SET,
+                entities: wordList,
+                wordIds,
+                metaPropName,
+              });
+              if (wordIds) {
+                resolve(true);
               }
-            });
-            return pro;
-          });
-          Promise.all(promiseArray).then((values) => {
-            if (values) {
-              resolve(true);
-            } else {
               resolve(false);
             }
           })

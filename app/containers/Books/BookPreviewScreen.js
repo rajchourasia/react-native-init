@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import { ActionCreators } from '../../actions';
 import BookReadScreen from '../Books/BookReadScreen.js';
@@ -50,7 +51,13 @@ class BookPreviewScreen extends Component {
   render() {
     const book = this.props.book;
     if (!book) {
-      return <View />;
+      return (
+        <ActivityIndicator
+          style={[styles.centering, { flex: 1 }]}
+          size="small"
+          color="grey"
+        />
+      );
     }
     return (
       <View style={styles.container}>
@@ -90,7 +97,7 @@ function mapStateToProps(state, props) {
   const bookGrid = props.bookGrid;
   return {
     book: state.books.entities[bookGrid],
-    bookId: state.books.entities[bookGrid].id,
+    bookId: state.books.entities[bookGrid] ? state.books.entities[bookGrid].id : null,
   };
 }
 
