@@ -90,6 +90,7 @@ class BookReadScreen extends Component {
           <List containerStyle={{ marginTop: 0 }}>
           {
             chapters.map((title, key) => {
+              const isCurrentChapter = (parseInt(chapter, 10) === parseInt(key, 10));
               return (
                 <View key={key}>
                   <ListItem
@@ -98,7 +99,7 @@ class BookReadScreen extends Component {
                     title={`${key}. ${title}`}
                     rightIcon={{ name: 'chevron-right' }}
                     containerStyle={[{ paddingTop: 5, paddingBottom: 5, backgroundColor: '#eee' },
-                      (chapter === key) && { backgroundColor: '#ddd' }]}
+                      isCurrentChapter && { backgroundColor: '#ddd' }]}
                   />
                 </View>
               );
@@ -116,9 +117,8 @@ class BookReadScreen extends Component {
     const chapters = book.chapters;
     const currentChapter = state.chapter;
 
-    const menu = thisC.getChaptersMenu(thisC, chapters);
-
     if (chapters) {
+      const menu = thisC.getChaptersMenu(thisC, chapters);
       return (
         <View style={{ flex: 1, minHeight: window.height }}>
           <SideMenu
@@ -174,7 +174,7 @@ class BookReadScreen extends Component {
     });
   }
   wrapWordList({ stateFlag, wordListComponentFunction, emptyText }) {
-    if (stateFlag && stateFlag === null) {
+    if (stateFlag === null) {
       return (
         <ActivityIndicator
           style={[styles.centering, { flex: 1 }]}
@@ -182,7 +182,7 @@ class BookReadScreen extends Component {
           color="grey"
         />
       );
-    } else if (stateFlag && stateFlag === false) {
+    } else if (stateFlag === false) {
       return (
         <View style={[styles.centering, styles.notFound]}>
           <Text style={styles.notFoundText}>{emptyText}</Text>
@@ -242,6 +242,7 @@ class BookReadScreen extends Component {
               emptyText: 'Search words above!',
             })
             : this.wrapWordList({
+              stateFlag: this.props.book && typeof this.props.book.chapters !== 'undefined',
               wordListComponentFunction: this.getDefaultWordListComponent,
               emptyText: 'Default List is Empty :(',
             })
