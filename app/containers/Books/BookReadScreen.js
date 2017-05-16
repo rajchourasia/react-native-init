@@ -146,7 +146,7 @@ class BookReadScreen extends Component {
         </View>
       );
     }
-    return null;
+    return <View />;
   }
   getUserWordListComponent(thisC) {
     const props = thisC.props;
@@ -184,7 +184,7 @@ class BookReadScreen extends Component {
       );
     } else if (stateFlag === false) {
       return (
-        <View style={[styles.centering, styles.notFound]}>
+        <View style={[styles.centering, styles.notFound, { flex: 1 }]}>
           <Text style={styles.notFoundText}>{emptyText}</Text>
         </View>
       );
